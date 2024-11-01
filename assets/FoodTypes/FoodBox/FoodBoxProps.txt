@@ -1,0 +1,4 @@
+chicken;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.0;
+nuggets;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.5;
+grilled sausages;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.0;
+falafel;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;vegetarian;500;14.0;
