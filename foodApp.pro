@@ -9,17 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ProductWidget.cpp \
-    loginpage.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    registerpage.cpp
+    cfiles/ProductWidget.cpp \
+    cfiles/loginpage.cpp \
+    cfiles/main.cpp \
+    cfiles/mainwindow.cpp \
+    cfiles/registerpage.cpp
 
 HEADERS += \
-    ProductWidget.h \
-    loginpage.h \
-    mainwindow.h \
-    registerpage.h
+    hfiles/ProductWidget.h \
+    hfiles/loginpage.h \
+    hfiles/mainwindow.h \
+    hfiles/registerpage.h
 
 FORMS += \
     mainwindow.ui

@@ -1,9 +1,9 @@
-#include "mainwindow.h"
+#include "../hfiles/mainwindow.h"
 #include <QDebug>
 #include <QGridLayout>
-#include "ProductWidget.h"
-#include "registerpage.h"
-#include "loginpage.h"
+#include "../hfiles/ProductWidget.h"
+#include "../hfiles/registerpage.h"
+#include "../hfiles/loginpage.h"
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)

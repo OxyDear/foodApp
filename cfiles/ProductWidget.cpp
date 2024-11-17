@@ -1,4 +1,4 @@
-#include "ProductWidget.h"
+#include "../hfiles/ProductWidget.h"
 #include <QMouseEvent>
 
 ProductWidget::ProductWidget(const QString &imagePath, const QString &name, QWidget *parent)
