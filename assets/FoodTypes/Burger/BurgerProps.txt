@@ -1,0 +1,4 @@
+signature bun;chicken cutlet;pickled cucumber;tomato;iceberg lettuce;signature garlic sauce;burger sauce;
+signature bun;beef cutlet;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;
+signature bun;chicken cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;

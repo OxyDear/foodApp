@@ -13,13 +13,19 @@ SOURCES += \
     cfiles/loginpage.cpp \
     cfiles/main.cpp \
     cfiles/mainwindow.cpp \
-    cfiles/registerpage.cpp
+    cfiles/registerpage.cpp \
+    cfiles/types.cpp
+    DatabaseManager/
+    users/
 
 HEADERS += \
     hfiles/ProductWidget.h \
     hfiles/loginpage.h \
     hfiles/mainwindow.h \
-    hfiles/registerpage.h
+    hfiles/registerpage.h \
+    hfiles/types.h
+    mainClasses/
+    Food.h
 
 FORMS += \
     mainwindow.ui
@@ -31,6 +37,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     images/sample.png
+    assets/
 
 RESOURCES += \
     resources.qrc \

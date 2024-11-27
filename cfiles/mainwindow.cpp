@@ -4,7 +4,9 @@
 #include "../hfiles/ProductWidget.h"
 #include "../hfiles/registerpage.h"
 #include "../hfiles/loginpage.h"
+#include "../hfiles/types.h"
 #include <iostream>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -71,16 +73,31 @@ void MainWindow::setupUI() {
 
 void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &name) {
     QPushButton *categoryButton = new QPushButton(name);
-    categoryButton->setStyleSheet("QPushButton {"
-                                  "padding: 10px;"
-                                  "}"
-                                  "QPushButton:hover {"
-                                  "background-color: gray;"
-                                  "}");
+    categoryButton->setStyleSheet("QPushButton { padding: 10px; } QPushButton:hover { background-color: gray; }");
 
-    // Добавляем кнопку в горизонтальный layout
+    connect(categoryButton, &QPushButton::clicked, [this]() {
+        TypesPage *typesPage = new TypesPage(this);
+        connect(typesPage, &TypesPage::backToMain, this, [this](const QString &type) {
+            // Обработка типа
+            if (!type.isEmpty()) {
+                // Здесь вы можете выполнить необходимое действие с типом
+                MainWindow::types = type;
+            }
+            stackedWidget->setCurrentWidget(mainPage); // Возврат на главную страницу
+        });
+
+        stackedWidget->addWidget(typesPage);
+        stackedWidget->setCurrentWidget(typesPage);
+    });
+
     categoryLayout->addWidget(categoryButton);
 }
+
+// QStringList getPaths(QString &type) {
+//     if (type == "Burger") {
+//         return {}
+//     }
+// }
 
 
 void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name) {
