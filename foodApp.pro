@@ -14,18 +14,26 @@ SOURCES += \
     cfiles/main.cpp \
     cfiles/mainwindow.cpp \
     cfiles/registerpage.cpp \
-    cfiles/types.cpp
-    DatabaseManager/
-    users/
+    cfiles/types.cpp \
+    DatabaseManager/FileProcessing.cpp \
 
 HEADERS += \
+    DatabaseManager/FileProcessing.h \
     hfiles/ProductWidget.h \
     hfiles/loginpage.h \
     hfiles/mainwindow.h \
     hfiles/registerpage.h \
-    hfiles/types.h
-    mainClasses/
-    Food.h
+    hfiles/types.h \
+    mainClasses/Burger.h \
+    mainClasses/Drink.h \
+    mainClasses/FoodBox.h \
+    mainClasses/Salad.h \
+    mainClasses/Sauce.h \
+    mainClasses/Snack.h \
+    mainClasses/Soup.h \
+    Food.h \
+    users/Admin.h \
+    users/User.h
 
 FORMS += \
     mainwindow.ui
@@ -37,7 +45,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     images/sample.png
-    assets/
 
 RESOURCES += \
     resources.qrc \

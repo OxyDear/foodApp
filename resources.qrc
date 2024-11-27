@@ -1,5 +1,67 @@
 <RCC>
     <qresource prefix="/">
         <file>images/sample.png</file>
+        <file>assets/FoodTypes/Burger/images/Beef Cheeseburger.jpg</file>
+        <file>assets/FoodTypes/Burger/images/Chicken Cheeseburger.jpg</file>
+        <file>assets/FoodTypes/Burger/images/Beef Burger.jpg</file>
+        <file>assets/FoodTypes/Burger/images/Chicken Burger.jpg</file>
+        <file>assets/FoodTypes/Burger/BurgerProps.txt</file>
+        <file>assets/FoodTypes/Burger/BurgerTypes.txt</file>
+        <file>assets/FoodTypes/Drink/images/Tea ginger-honey-lemon.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Tea orange-lime.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Tea green.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Tea black.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Tea raspberry-grapefruit.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Tea sea ​​buckthorn-orange.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Bottle of Water still.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Bottle of Water medium sparkling.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Bottle of Water highly carbonated.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Coca-Cola.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Fanta.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Sprite.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Pulpy.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Juice Dobri.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Lemonade orange-lime.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Lemonade ginger-honey-lemon.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Lemonade raspberry-grapefruit.jpg</file>
+        <file>assets/FoodTypes/Drink/images/Lemonade sea ​​buckthorn-orange.jpg</file>
+        <file>assets/FoodTypes/Drink/DrinkProps.txt</file>
+        <file>assets/FoodTypes/Drink/DrinkTypes.txt</file>
+        <file>assets/FoodTypes/FoodBox/images/Falafel food box.jpg</file>
+        <file>assets/FoodTypes/FoodBox/images/Food box with sausages.jpg</file>
+        <file>assets/FoodTypes/FoodBox/images/Food box with nuggets.jpg</file>
+        <file>assets/FoodTypes/FoodBox/images/Classic Food Box.jpg</file>
+        <file>assets/FoodTypes/FoodBox/FoodBoxProps.txt</file>
+        <file>assets/FoodTypes/FoodBox/FoodBoxTypes.txt</file>
+        <file>assets/FoodTypes/Salad/images/Caesar salad.jpg</file>
+        <file>assets/FoodTypes/Salad/images/Vegetable salad.jpg</file>
+        <file>assets/FoodTypes/Salad/SaladProps.txt</file>
+        <file>assets/FoodTypes/Salad/SaladTypes.txt</file>
+        <file>assets/FoodTypes/Sauce/images/American mustard.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Ketchup.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Barbecue sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Burger sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Mushroom sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Sweet and sour sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Cheese sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Teriyaki sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Signature grill sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Signature onion-sour cream sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Signature hot sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Signature caesar sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/images/Signature garlic sauce.jpg</file>
+        <file>assets/FoodTypes/Sauce/SauceProps.txt</file>
+        <file>assets/FoodTypes/Sauce/SauceTypes.txt</file>
+        <file>assets/FoodTypes/Snack/images/French fries.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Country-style potatoes.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Nuggets.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Chicken wings.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Cheese sticks.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Shrimps.jpg</file>
+        <file>assets/FoodTypes/Snack/SnackProps.txt</file>
+        <file>assets/FoodTypes/Snack/SnackTypes.txt</file>
+        <file>assets/FoodTypes/Soup/images/Solyanka.jpg</file>
+        <file>assets/FoodTypes/Soup/SoupProps.txt</file>
+        <file>assets/FoodTypes/Soup/SoupTypes.txt</file>
     </qresource>
 </RCC>

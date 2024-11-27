@@ -64,6 +64,7 @@ void MainWindow::setupUI() {
     backButton = new QPushButton("Back", this);
     connect(backButton, &QPushButton::clicked, [this]() {
         stackedWidget->setCurrentWidget(mainPage);
+        std::cout << mainPage->size().height() << " " << mainPage->size().width();
     });
 
     productLayout->addWidget(mainImageLabel);
