@@ -32,7 +32,7 @@ void TypesPage::setupUI() {
     // Кнопки типов
     QVBoxLayout *buttonsLayout = new QVBoxLayout();
 
-    QStringList types = {"Тип 1", "Тип 2", "Тип 3"};
+    QStringList types = {"Burger", "Drink", "Food Box", "Salad", "Sauce", "Snack", "Soup"};
     for (const QString &type : types) {
         QPushButton *typeButton = new QPushButton(type, this);
         typeButton->setFixedSize(250, 50); // Увеличиваем размер кнопок

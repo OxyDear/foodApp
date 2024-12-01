@@ -5,7 +5,9 @@
 #include "../hfiles/registerpage.h"
 #include "../hfiles/loginpage.h"
 #include "../hfiles/types.h"
+#include "../Food.h"
 #include <iostream>
+#include "vector"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -42,8 +44,13 @@ void MainWindow::setupUI() {
     scrollArea->setWidgetResizable(true);
     scrollWidget = new QWidget();
     scrollLayout = new QVBoxLayout(scrollWidget);
+    Food *reader = new Food(types);
+    std::vector<std::string> prods = reader->setProdsList();
 
     // Заполнение прокручиваемой области
+    for (auto &el : prods) {
+        addProduct(":/assets/FoodTypes/" + types, el);
+    }
     addProduct(":/images/sample.png", "Товар 1");
     addProduct(":/images/sample.png", "Товар 2");
     addProduct(":/images/sample.png", "Товар 3");
@@ -64,7 +71,6 @@ void MainWindow::setupUI() {
     backButton = new QPushButton("Back", this);
     connect(backButton, &QPushButton::clicked, [this]() {
         stackedWidget->setCurrentWidget(mainPage);
-        std::cout << mainPage->size().height() << " " << mainPage->size().width();
     });
 
     productLayout->addWidget(mainImageLabel);
@@ -82,7 +88,7 @@ void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &n
             // Обработка типа
             if (!type.isEmpty()) {
                 // Здесь вы можете выполнить необходимое действие с типом
-                MainWindow::types = type;
+                MainWindow::types = type.toStdString();
             }
             stackedWidget->setCurrentWidget(mainPage); // Возврат на главную страницу
         });
@@ -143,17 +149,17 @@ void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &
     categoryLayout->addWidget(authButton);
 }
 
-void MainWindow::addProduct(const QString &imagePath, const QString &name) {
+void MainWindow::addProduct(const std::string &imagePath, const std::string &name) {
     ProductWidget *productWidget = new ProductWidget(imagePath, name);
-    connect(productWidget, &ProductWidget::clicked, [this, imagePath]() {
-        showProductPage(imagePath);
+    connect(productWidget, &ProductWidget::clicked, [this, imagePath, name]() {
+        showProductPage(imagePath + "/images/" + name);
     });
 
     scrollLayout->addWidget(productWidget);
 }
 
-void MainWindow::showProductPage(const QString &imagePath) {
-    QPixmap pixmap(imagePath);
+void MainWindow::showProductPage(const std::string &imagePath) {
+    QPixmap pixmap(QString::fromStdString(imagePath));
     if (pixmap.isNull()) {
         qDebug() << "Ошибка загрузки изображения:" << imagePath;
     } else {

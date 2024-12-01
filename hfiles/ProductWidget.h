@@ -10,7 +10,7 @@ class ProductWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ProductWidget(const QString &imagePath, const QString &name, QWidget *parent = nullptr);
+    explicit ProductWidget( const std::string &imagePath, const std::string &name, QWidget *parent = nullptr);
 
 signals:
     void clicked();
@@ -21,7 +21,7 @@ protected:
 private:
     QLabel *productImage;
     QLabel *productName;
-    QString imagePath;
+    const std::string imagePath;
 };
 
 #endif // PRODUCTWIDGET_H

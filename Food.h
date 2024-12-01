@@ -14,7 +14,7 @@ protected:
     double price;
     int mass;
 public:
-    Food(const std::string &type, double price, int mass) : type(type), price(price), mass(mass) {}
+    Food(const std::string &type, double price=0, int mass=0) : type(type), price(price), mass(mass) {}
     virtual void display() const {
         std::cout << type << std::endl;
     }
@@ -23,8 +23,8 @@ public:
     std::vector<std::string> readInfo() {
         File fileManager;
         try {
-            int fd1 = fileManager.OpenFile("../assets/FoodTypes/" + type + "/" + type + "Types.txt");
-            int fd2 = fileManager.OpenFile("../assets/FoodTypes/" + type + "/" + type + "Props.txt");
+            int fd1 = fileManager.OpenFile("assets/FoodTypes/" + type + "/" + type + "Types.txt");
+            int fd2 = fileManager.OpenFile("assets/FoodTypes/" + type + "/" + type + "Props.txt");
             char* buffer1 = new char[1000];
             char* buffer2 = new char[1000];
             fileManager.ReadFile(fd1, buffer1, 1000);

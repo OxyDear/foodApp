@@ -15,14 +15,14 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QString types = "Burger";
+    std::string types = "Burger";
 
 private:
     void setupUI();
     void addCategoryButton(QHBoxLayout *categoryLayout, const QString &name);
     void addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name);
-    void addProduct(const QString &imagePath, const QString &name);
-    void showProductPage(const QString &imagePath);
+    void addProduct(const std::string &imagePath, const std::string &name);
+    void showProductPage(const std::string &imagePath);
 
 private:
     QScrollArea *scrollArea;

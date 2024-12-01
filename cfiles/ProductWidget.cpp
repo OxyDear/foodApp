@@ -1,16 +1,16 @@
 #include "../hfiles/ProductWidget.h"
 #include <QMouseEvent>
 
-ProductWidget::ProductWidget(const QString &imagePath, const QString &name, QWidget *parent)
+ProductWidget::ProductWidget(const std::string &imagePath, const std::string &name, QWidget *parent)
     : QWidget(parent), imagePath(imagePath) {
 
     QHBoxLayout *layout = new QHBoxLayout(this);
 
     productImage = new QLabel();
-    productImage->setPixmap(QPixmap(imagePath).scaled(100, 100, Qt::KeepAspectRatio));
+    productImage->setPixmap(QPixmap(QString::fromStdString(imagePath)).scaled(100, 100, Qt::KeepAspectRatio));
     productImage->setFixedSize(100, 100);
 
-    productName = new QLabel(name);
+    productName = new QLabel(QString::fromStdString(name));
 
     layout->addWidget(productImage);
     layout->addWidget(productName);
