@@ -44,14 +44,14 @@ void MainWindow::setupUI() {
     scrollArea->setWidgetResizable(true);
     scrollWidget = new QWidget();
     scrollLayout = new QVBoxLayout(scrollWidget);
-    Food *reader = new Food(types);
-    std::vector<std::string> prods = reader->setProdsList();
+    // Food *reader = new Food(types);
+    // std::vector<std::string> prods = reader->setProdsList();
 
     // Заполнение прокручиваемой области
-    for (auto &el : prods) {
-        addProduct(":/assets/FoodTypes/" +  types, el);
-    }
-
+    updateProductList();
+    // for (auto &el : prods) {
+    //     addProduct(":/assets/FoodTypes/" +  types, el);
+    // }
 
     scrollArea->setWidget(scrollWidget);
     mainLayout->addWidget(scrollArea);
@@ -83,12 +83,11 @@ void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &n
     connect(categoryButton, &QPushButton::clicked, [this]() {
         TypesPage *typesPage = new TypesPage(this);
         connect(typesPage, &TypesPage::backToMain, this, [this](const QString &type) {
-            // Обработка типа
             if (!type.isEmpty()) {
-                // Здесь вы можете выполнить необходимое действие с типом
                 MainWindow::types = type.toStdString();
+                updateProductList();
             }
-            stackedWidget->setCurrentWidget(mainPage); // Возврат на главную страницу
+            stackedWidget->setCurrentWidget(mainPage);
         });
 
         stackedWidget->addWidget(typesPage);
@@ -163,5 +162,23 @@ void MainWindow::showProductPage(const std::string &imagePath) {
     } else {
         mainImageLabel->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio));
         stackedWidget->setCurrentWidget(productPage);
+    }
+}
+
+void MainWindow::updateProductList() {
+    // Очистить текущий контент
+    QLayoutItem* item;
+    while ((item = scrollLayout->takeAt(0)) != nullptr) {
+        delete item->widget(); // Удаляем виджет
+        delete item; // Удаляем элемент
+    }
+
+    // Здесь вы можете заново заполнить scrollLayout с нужными продуктами
+    Food *reader = new Food(types);
+    std::vector<std::string> prods = reader->setProdsList();
+
+    // Заполнение прокручиваемой области
+    for (auto &el : prods) {
+        addProduct(":/assets/FoodTypes/" + types, el);
     }
 }

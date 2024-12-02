@@ -23,6 +23,7 @@ private:
     void addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name);
     void addProduct(const std::string &imagePath, const std::string &name);
     void showProductPage(const std::string &imagePath);
+    void updateProductList();
 
 private:
     QScrollArea *scrollArea;
