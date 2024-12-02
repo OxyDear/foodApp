@@ -49,11 +49,9 @@ void MainWindow::setupUI() {
 
     // Заполнение прокручиваемой области
     for (auto &el : prods) {
-        addProduct(":/assets/FoodTypes/" + types, el);
+        addProduct(":/assets/FoodTypes/" +  types, el);
     }
-    addProduct(":/images/sample.png", "Товар 1");
-    addProduct(":/images/sample.png", "Товар 2");
-    addProduct(":/images/sample.png", "Товар 3");
+
 
     scrollArea->setWidget(scrollWidget);
     mainLayout->addWidget(scrollArea);

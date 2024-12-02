@@ -7,13 +7,13 @@ ProductWidget::ProductWidget(const std::string &imagePath, const std::string &na
     QHBoxLayout *layout = new QHBoxLayout(this);
 
     productImage = new QLabel();
-    productImage->setPixmap(QPixmap(QString::fromStdString(imagePath)).scaled(100, 100, Qt::KeepAspectRatio));
-    productImage->setFixedSize(100, 100);
+    productImage->setPixmap(QPixmap(QString::fromStdString(imagePath+"/images/"+name+".jpg")).scaled(220, 150, Qt::KeepAspectRatio));
+    productImage->setFixedSize(220, 150);
 
-    productName = new QLabel(QString::fromStdString(name));
+    // productName = new QLabel(QString::fromStdString(name));
 
     layout->addWidget(productImage);
-    layout->addWidget(productName);
+    // layout->addWidget(productName);
     setLayout(layout);
     setCursor(Qt::PointingHandCursor); // Изменяем курсор при наведении
 }

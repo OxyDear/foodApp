@@ -23,8 +23,8 @@ public:
     std::vector<std::string> readInfo() {
         File fileManager;
         try {
-            int fd1 = fileManager.OpenFile("assets/FoodTypes/" + type + "/" + type + "Types.txt");
-            int fd2 = fileManager.OpenFile("assets/FoodTypes/" + type + "/" + type + "Props.txt");
+            int fd1 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/Qt/app/assets/FoodTypes/" + type + "/" + type + "Types.txt");
+            int fd2 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/Qt/app/assets/FoodTypes/" + type + "/" + type + "Props.txt");
             char* buffer1 = new char[1000];
             char* buffer2 = new char[1000];
             fileManager.ReadFile(fd1, buffer1, 1000);
