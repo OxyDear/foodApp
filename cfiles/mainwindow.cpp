@@ -25,38 +25,71 @@ void MainWindow::setupUI() {
     mainPage = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
 
+    RegisterPage *registerpage = new RegisterPage(this);
+    connect(registerpage, &RegisterPage::backToMain, this, [this]() {
+        stackedWidget->setCurrentWidget(mainPage);
+        std::cout << "main" << " ";
+    });
+
+    connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage]() {
+        std::cout << "login1" << " ";
+        LoginPage* loginpage = new LoginPage(this);
+        connect(loginpage, &LoginPage::backToMain, this, [this]() {
+            stackedWidget->setCurrentWidget(mainPage);
+            std::cout << "main" << " ";
+        });
+        connect(loginpage, &LoginPage::switchToRegister, [this, registerpage]() {
+            stackedWidget->setCurrentWidget(registerpage);
+            std::cout << "register1" << " ";
+        });
+
+        connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
+            setCurrentUser(username); // Устанавливаем текущего пользователя
+        });
+
+        stackedWidget->addWidget(loginpage);
+        stackedWidget->setCurrentWidget(loginpage);
+        std::cout << "login2" << " ";
+    });
+
+    connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
+        setCurrentUser(username); // Устанавливаем текущего пользователя
+    });
+
+    stackedWidget->addWidget(registerpage);
+    stackedWidget->setCurrentWidget(registerpage);
+    std::cout << "register2" << " ";
+
     // Панель категорий
     QHBoxLayout *categoryLayout = new QHBoxLayout();
-    categoryLayout->setAlignment(Qt::AlignLeft); // Выравнивание по левому краю
-    mainLayout->addLayout(categoryLayout); // Добавляем layout категорий в основной layout
+    categoryLayout->setAlignment(Qt::AlignLeft);
+    mainLayout->addLayout(categoryLayout);
 
-    // Добавляем кнопки категорий в горизонтальный layout
+    // Добавляем кнопки категорий
     addCategoryButton(categoryLayout, "Types");
 
     categoryLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
+    // Заменяем кнопку Auth на QLabel для имени пользователя
+    userLabel = new QLabel("Пользователь: Не вошел", this); // Изначально не вошел
+    categoryLayout->addWidget(userLabel); // Добавляем QLabel в layout категорий
     addAuthorizeButton(categoryLayout, "Auth");
-    // addCategoryButton(categoryLayout, "Тип 2");
-    // addCategoryButton(categoryLayout, "Тип 3");
+
+    // Убираем кнопку "Auth"
+    // addAuthorizeButton(categoryLayout, "Auth");
 
     // Прокручиваемая область для продуктов
     scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
     scrollWidget = new QWidget();
     scrollLayout = new QVBoxLayout(scrollWidget);
-    // Food *reader = new Food(types);
-    // std::vector<std::string> prods = reader->setProdsList();
 
-    // Заполнение прокручиваемой области
     updateProductList();
-    // for (auto &el : prods) {
-    //     addProduct(":/assets/FoodTypes/" +  types, el);
-    // }
 
     scrollArea->setWidget(scrollWidget);
     mainLayout->addWidget(scrollArea);
 
-    stackedWidget->addWidget(mainPage);  // Добавляем главную страницу в стек
+    stackedWidget->addWidget(mainPage);
 
     // Страница товара
     productPage = new QWidget(this);
@@ -132,15 +165,24 @@ void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &
                 std::cout << "register1" << " ";
             });
 
+            connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
+                setCurrentUser(username); // Устанавливаем текущего пользователя
+            });
+
             stackedWidget->addWidget(loginpage);
             stackedWidget->setCurrentWidget(loginpage);
             std::cout << "login2" << " ";
+        });
+
+        connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
+            setCurrentUser(username); // Устанавливаем текущего пользователя
         });
 
         stackedWidget->addWidget(registerpage);
         stackedWidget->setCurrentWidget(registerpage);
         std::cout << "register2" << " ";
     });
+
 
     // Добавляем кнопку в горизонтальный layout
     categoryLayout->addWidget(authButton);
@@ -181,4 +223,14 @@ void MainWindow::updateProductList() {
     for (auto &el : prods) {
         addProduct(":/assets/FoodTypes/" + types, el);
     }
+}
+
+void MainWindow::setCurrentUser(const std::string &username) {
+    if (currentUser) {
+        delete currentUser; // Удаляем предыдущего пользователя
+    }
+    User *currentUser = new User(username); // Создаем нового пользователя
+    std::cout << currentUser->getUsername();
+    userLabel->setText(QString::fromStdString(currentUser->getUsername()));
+    std::cout << "Пользователь вошел: " << currentUser->getUsername() << std::endl;
 }

@@ -7,6 +7,8 @@
 class User {
 protected:
     std::string username;
+    std::string login;
+    std::string passwordCipher;
 
 public:
     User(const std::string& username) : username(username) {}
@@ -21,6 +23,12 @@ public:
         // Ограниченный доступ
         std::cout << "User: " << username << std::endl;
     }
+
+    void setLoginPass(std::string lg, std::string ps){
+        this->login = lg;
+        this->passwordCipher = ps;
+    }
+
 };
 
 #endif // USER_H

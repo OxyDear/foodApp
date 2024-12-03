@@ -24,5 +24,20 @@
         <file>assets/FoodTypes/Drink/images/Raspberry&amp;Grapefruit Tea.jpg</file>
         <file>assets/FoodTypes/Drink/images/Sea Buckthorn&amp;Orange Tea.jpg</file>
         <file>assets/FoodTypes/Drink/images/Sea Buckthorn&amp;Orange Lemonade.jpg</file>
+        <file>assets/FoodTypes/Snack/images/French fries.png</file>
+        <file>assets/FoodTypes/Snack/images/Country-style potatoes.png</file>
+        <file>assets/FoodTypes/Snack/images/Chicken wings.png</file>
+        <file>assets/FoodTypes/Snack/images/Cheese sticks.png</file>
+        <file>assets/FoodTypes/Snack/images/Nuggets.jpg</file>
+        <file>assets/FoodTypes/Snack/images/Shrimps.jpg</file>
+        <file>assets/FoodTypes/Salad/images/Vegetable salad.png</file>
+        <file>assets/FoodTypes/Salad/images/Caesar salad.png</file>
+        <file>assets/FoodTypes/FoodBox/images/Food box with sausages.png</file>
+        <file>assets/FoodTypes/FoodBox/images/Falafel food box.png</file>
+        <file>assets/FoodTypes/FoodBox/images/Classic Food Box.png</file>
+        <file>assets/FoodTypes/FoodBox/images/Food box with nuggets.png</file>
+        <file>assets/FoodTypes/Drink/images/Pulpy.png</file>
+        <file>assets/FoodTypes/Drink/images/Sprite.png</file>
+        <file>assets/FoodTypes/Drink/images/Fanta.png</file>
     </qresource>
 </RCC>

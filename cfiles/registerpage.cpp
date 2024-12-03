@@ -1,6 +1,8 @@
 #include "../hfiles/registerpage.h"
+#include "../hfiles/encrypt.h"
 #include <QMessageBox>
 #include <QFont>
+#include <QFile>
 #include <QHBoxLayout>
 
 RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
@@ -66,6 +68,44 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
 void RegisterPage::handleRegister() {
     QString username = usernameEdit->text();
     QString password = passwordEdit->text();
-    QMessageBox::information(this, "Регистрация", "Регистрация выполнена для: " + username);
+
+    QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
+    bool userExists = false;
+
+    // Проверяем, существует ли файл
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        QString line;
+
+        // Проверяем наличие логина в файле
+        while (in.readLineInto(&line)) {
+            if (line.startsWith(username + ":")) {
+                userExists = true;
+                break; // Логин найден, выходим из цикла
+            }
+        }
+        file.close(); // Закрываем файл
+    }
+
+    // Если логин уже существует, показываем сообщение
+    if (userExists) {
+        QMessageBox::warning(this, "Ошибка", "Этот логин уже существует. Пожалуйста, выберите другой.");
+        return; // Выходим из функции
+    }
+
+    // Открываем файл для записи
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+
+        // Записываем данные в формате username:password
+        // QString::fromStdString(hashPassword(password.toStdString()))
+        out << username << ":" << password << "\n"; // Записываем в файл
+        file.close(); // Закрываем файл
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл для записи.");
+        return; // Выходим из функции, если файл не открывается
+    }
+
+    emit userRegIn(username.toStdString());
     emit backToMain(); // Возвращаем на главную страницу
 }

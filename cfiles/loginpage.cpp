@@ -1,6 +1,8 @@
 #include "../hfiles/loginpage.h"
+#include "../hfiles/encrypt.h"
 #include <QMessageBox>
 #include <QFont>
+#include <QFile>
 
 LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -64,8 +66,41 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
 void LoginPage::handleLogin() {
     QString username = usernameEdit->text();
     QString password = passwordEdit->text();
-    // Здесь добавьте логику для входа
+
+    // Открываем файл для чтения
+    QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
+    bool userFound = false;
+
+    // Проверяем, существует ли файл
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        QString line;
+
+        // Проверяем наличие логина и пароля в файле
+        while (in.readLineInto(&line)) {
+            QStringList credentials = line.split(":");
+            // QString::fromStdString(hashPassword(password.toStdString()))
+            if (credentials.size() == 2 && credentials[0] == username && credentials[1] == password) {
+                userFound = true; // Логин и пароль совпадают
+                break; // Выходим из цикла
+            }
+        }
+        file.close(); // Закрываем файл
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл для чтения.");
+        return; // Выходим из функции
+    }
+
+    // Если пользователь не найден, показываем сообщение
+    if (!userFound) {
+        QMessageBox::warning(this, "Ошибка", "Неверный логин или пароль.");
+        return; // Выходим из функции
+    }
+
+    // Если вход успешен
+    if (userFound) {
+        emit userLoggedIn(username.toStdString());
+    }
     QMessageBox::information(this, "Вход", "Вход выполнен как: " + username);
     emit backToMain();
-    // Логика входа...
 }
