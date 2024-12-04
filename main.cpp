@@ -50,7 +50,7 @@ int main() {
 
 //    FoodBox fdx("Rice with Chicken", {"Salad", "Fries"});
 //    Salad sld({"Lettuce", "Tomato", "Cucumber"});
-//    Snack snk("Chips");
+//    Snack snk("Chips"
 //    Soup sp("Tomato");
 //    Drink drnk("Coke", false);
 

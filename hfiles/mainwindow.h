@@ -64,7 +64,7 @@ public:
 private:
     void setupUI();
     void addCategoryButton(QHBoxLayout *categoryLayout, const QString &name);
-    void addProduct(const std::string &imagePath, const std::string &name);
+    void addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price);
     void showProductPage(const std::string &imagePath);
     void updateProductList();
     void setCurrentUser(const std::string &username); // Метод для установки текущего пользователя

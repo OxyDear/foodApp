@@ -1,2 +1,2 @@
 pickled cucumber;tomato;bell pepper;iceberg lettuce;olive;olive oil;vegetarian;230;6.5;
-chicken;tomato;iceberg lettuce;cheese;crackers;signature сaesar sauce;230;7.5;
+chicken;tomato;iceberg lettuce;cheese;crackers;signature caesar sauce;230;7.5;

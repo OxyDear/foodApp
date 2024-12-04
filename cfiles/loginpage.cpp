@@ -5,8 +5,10 @@
 #include <QFile>
 
 LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
+
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter); // Центрируем все элементы
+    layout->setContentsMargins(30, 30, 30, 30);
 
     // Заголовок с кнопкой
     QHBoxLayout *headerLayout = new QHBoxLayout();
@@ -16,17 +18,22 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     titleLabel->setFont(titleFont);
     headerLayout->addWidget(titleLabel);
 
-    // Кнопка "Log In"
+    // Кнопка "Reg In"
     QPushButton *regButton = new QPushButton("Reg In", this);
     regButton->setFixedSize(100, 40); // Размер кнопки
+    regButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
+                             "QPushButton:hover { color: #bbb; }");
+    connect(regButton, &QPushButton::clicked, this, [this]() {
+        emit switchToRegister();
+    });
     headerLayout->addWidget(regButton, 0, Qt::AlignRight); // Выравнивание по правому краю
-
     layout->addLayout(headerLayout); // Добавляем заголовок с кнопкой в основной макет
 
     // Логин
     layout->addWidget(new QLabel("Логин:"));
     usernameEdit = new QLineEdit(this);
     usernameEdit->setFixedWidth(250); // Увеличиваем ширину
+    usernameEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
     layout->addWidget(usernameEdit);
 
     // Пароль
@@ -34,26 +41,34 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     passwordEdit = new QLineEdit(this);
     passwordEdit->setEchoMode(QLineEdit::Password);
     passwordEdit->setFixedWidth(250); // Увеличиваем ширину
+    passwordEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
     layout->addWidget(passwordEdit);
+
+    layout->addSpacing(20);
 
     // Кнопка регистрации
     loginButton = new QPushButton("Войти", this);
     loginButton->setFixedSize(200, 50); // Увеличиваем размер кнопки
+    loginButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
+                               "QPushButton:hover { color: #bbb; }");
+    // layout->addWidget(regButton, 0, Qt::AlignCenter); // Центрируем кнопку
     QFont buttonFont = loginButton->font();
     buttonFont.setPointSize(16); // Увеличиваем размер шрифта кнопки
     loginButton->setFont(buttonFont);
     connect(loginButton, &QPushButton::clicked, this, &LoginPage::handleLogin);
-    layout->addWidget(loginButton);
+    layout->addWidget(loginButton, 0, Qt::AlignCenter);
 
     // Кнопка назад
     QPushButton* backButton = new QPushButton("Назад", this);
     backButton->setFixedSize(200, 50); // Увеличиваем размер кнопки
     backButton->setFont(buttonFont); // Используем тот же шрифт
+    backButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
+                              "QPushButton:hover { color: #bbb; }");
     // connect(backButton, &QPushButton::clicked, this, &LoginPage::backToMain);
     connect(backButton, &QPushButton::clicked, this, [this]() {
         emit backToMain();
     });
-    layout->addWidget(backButton);
+    layout->addWidget(backButton, 0, Qt::AlignCenter);
 
     // Связываем кнопку "Log In" с переходом на страницу логинизации
     connect(regButton, &QPushButton::clicked, this, [this]() {
@@ -66,6 +81,11 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
 void LoginPage::handleLogin() {
     QString username = usernameEdit->text();
     QString password = passwordEdit->text();
+
+    if (username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка", "Пожалуйста, заполните все поля.");
+        return;
+    }
 
     // Открываем файл для чтения
     QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
@@ -87,13 +107,13 @@ void LoginPage::handleLogin() {
         }
         file.close(); // Закрываем файл
     } else {
-        QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл для чтения.");
+        // QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл для чтения.");
         return; // Выходим из функции
     }
 
     // Если пользователь не найден, показываем сообщение
     if (!userFound) {
-        QMessageBox::warning(this, "Ошибка", "Неверный логин или пароль.");
+        // QMessageBox::warning(this, "Ошибка", "Неверный логин или пароль.");
         return; // Выходим из функции
     }
 
@@ -101,6 +121,6 @@ void LoginPage::handleLogin() {
     if (userFound) {
         emit userLoggedIn(username.toStdString());
     }
-    QMessageBox::information(this, "Вход", "Вход выполнен как: " + username);
+    // QMessageBox::information(this, "Вход", "Вход выполнен как: " + username);
     emit backToMain();
 }
