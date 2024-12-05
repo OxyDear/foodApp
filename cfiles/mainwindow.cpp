@@ -424,21 +424,71 @@ void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &
 
 void MainWindow::addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price) {
     ProductWidget *productWidget = new ProductWidget(imagePath, name, mass, price);
-    connect(productWidget, &ProductWidget::clicked, [this, imagePath, name]() {
-        showProductPage(imagePath + "/images/" + name);
+    Food* reader = new Food(types);
+    std::vector<std::vector<std::string>> props = reader->setPropsList();
+    std::vector<std::string> prop;
+    std::vector<std::string> prods = reader->setProdsList();
+    for (int i = 0; i < prods.size(); ++i) {
+        if (prods[i] == name) {
+            prop = props[i];
+        }
+    }
+    connect(productWidget, &ProductWidget::clicked, [this, imagePath, name, prop]() {
+        showProductPage(imagePath + "/images/" + name, prop);
     });
 
     scrollLayout->addWidget(productWidget);
 }
 
-void MainWindow::showProductPage(const std::string &imagePath) {
+void MainWindow::showProductPage(const std::string &imagePath, std::vector<std::string> props) {
+    // Создаем новый виджет для отображения страницы товара
+    QWidget *productDetailsPage = new QWidget(this);
+    QVBoxLayout *productLayout = new QVBoxLayout(productDetailsPage);
+    productLayout->setContentsMargins(10, 10, 10, 10); // Отступы у вертикального компоновщика
+    productLayout->setSpacing(10); // Расстояние между элементами
+
+    // Загружаем изображение
     QPixmap pixmap(QString::fromStdString(imagePath));
+    QLabel *mainImageLabel = new QLabel(); // Создаем метку для изображения
     if (pixmap.isNull()) {
         qDebug() << "Ошибка загрузки изображения:" << imagePath;
     } else {
-        mainImageLabel->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio));
-        stackedWidget->setCurrentWidget(productPage);
+        mainImageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio));
+        mainImageLabel->setAlignment(Qt::AlignLeft); // Выравниваем изображение по центру
+        productLayout->addWidget(mainImageLabel); // Добавляем изображение в основной компоновщик
     }
+
+    // Создаем вертикальный компоновщик для свойств
+    QVBoxLayout *textLayout = new QVBoxLayout();
+    textLayout->setSpacing(5); // Расстояние между элементами
+    textLayout->setContentsMargins(0, 0, 0, 0); // Убираем отступы у вертикального компоновщика
+
+    // Добавляем содержимое вектора props
+    for (const auto &p : props) {
+        QLabel *propLabel = new QLabel(QString::fromStdString(p)); // Создаем метку для каждого свойства
+        propLabel->setStyleSheet("margin: 0; padding: 0; font-size: 14px;"); // Убираем отступы и устанавливаем размер шрифта
+        textLayout->addWidget(propLabel); // Добавляем метку в вертикальный компоновщик
+    }
+
+    // Добавляем вертикальный виджет с текстом под изображением
+    QWidget *textWidget = new QWidget();
+    textWidget->setLayout(textLayout);
+    productLayout->addWidget(textWidget); // Добавляем текстовый виджет под изображением
+
+    // Кнопка "Назад"
+    QPushButton *backButton = new QPushButton("Назад", this);
+    backButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
+                              "QPushButton:hover { color: #bbb; }");
+    connect(backButton, &QPushButton::clicked, [this]() {
+        stackedWidget->setCurrentWidget(mainPage);
+    });
+
+    // Добавляем кнопку под текстовыми элементами
+    productLayout->addWidget(backButton);
+
+    // Устанавливаем новый виджет на стек
+    stackedWidget->addWidget(productDetailsPage);
+    stackedWidget->setCurrentWidget(productDetailsPage);
 }
 
 void MainWindow::updateProductList() {
