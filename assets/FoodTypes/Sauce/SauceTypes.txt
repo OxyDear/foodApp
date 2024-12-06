@@ -1,1 +1,1 @@
-American mustard;Ketchup;Barbecue sauce;Burger sauce;Mushroom sauce;Sweet and sour sauce;Cheese sauce;Teriyaki sauce;Signature grill sauce;Signature onion-sour cream sauce;Signature hot sauce;Signature caesar sauce;Signature garlic sauce
+American mustard;Ketchup;Barbecue sauce;Burger sauce;Mushroom sauce;Sweet and sour sauce;Cheese sauce;Teriyaki sauce;Signature grill sauce;Signature onion-sour cream sauce;Signature hot sauce;Signature caesar sauce;Signature garlic sauce;

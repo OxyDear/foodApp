@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>images/sample.png</file>
         <file>assets/FoodTypes/Burger/BurgerTypes.txt</file>
-        <file>assets/FoodTypes/Burger/BurgerProps.txt</file>
         <file>assets/FoodTypes/Burger/images/Beef Cheeseburger.png</file>
         <file>assets/FoodTypes/Burger/images/Chicken Cheeseburger.png</file>
         <file>assets/FoodTypes/Burger/images/Beef Burger.png</file>
@@ -63,5 +62,6 @@
         <file>assets/FoodTypes/Soup/SoupProps.txt</file>
         <file>assets/FoodTypes/Soup/SoupTypes.txt</file>
         <file>assets/FoodTypes/Soup/images/Solyanka.png</file>
+        <file>assets/FoodTypes/Burger/BurgerProps.txt</file>
     </qresource>
 </RCC>

@@ -24,9 +24,11 @@ private:
     void addCategoryButton(QHBoxLayout *categoryLayout, const QString &name);
     void addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price);
     void showProductPage(const std::string &imagePath, std::vector<std::string> props);
-    void updateProductList();
+    void updateProductList(std::string pricelow, std::string pricemax);
     void setCurrentUser(const std::string &username); // Метод для установки текущего пользователя
-    void addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name);
+    void addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name, QPushButton* addButton);
+    void updateUserStatusAdd(const std::string &username);
+    void updateUserStatusDelete(const std::string &username);
 
 private:
     QScrollArea *scrollArea;

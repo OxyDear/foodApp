@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     cfiles/ProductWidget.cpp \
+    cfiles/adminpage.cpp \
     cfiles/encrypt.cpp \
     cfiles/loginpage.cpp \
     cfiles/main.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     DatabaseManager/FileProcessing.h \
     assets/ProductWidget.h \
     hfiles/ProductWidget.h \
+    hfiles/adminpage.h \
     hfiles/checkps.h \
     hfiles/encrypt.h \
     hfiles/loginpage.h \
@@ -117,13 +119,11 @@ DISTFILES += \
     # assets/FoodTypes/Soup/SoupProps.txt \
     # assets/FoodTypes/Soup/SoupTypes.txt \
     # assets/FoodTypes/Soup/images/Solyanka.jpg \
-    assets/FoodTypes/Burger/BurgerProps.txt \
     assets/FoodTypes/Burger/BurgerTypes.txt \
     assets/FoodTypes/Burger/images/Beef Burger.png \
     assets/FoodTypes/Burger/images/Beef Cheeseburger.png \
     assets/FoodTypes/Burger/images/Chicken Burger.png \
     assets/FoodTypes/Burger/images/Chicken Cheeseburger.png \
-    assets/FoodTypes/BurgerProps.txt \
     assets/FoodTypes/BurgerTypes.txt \
     assets/FoodTypes/Drink/DrinkProps.txt \
     assets/FoodTypes/Drink/DrinkTypes.txt \
@@ -181,6 +181,7 @@ DISTFILES += \
     assets/FoodTypes/Soup/SoupProps.txt \
     assets/FoodTypes/Soup/SoupTypes.txt \
     assets/FoodTypes/Soup/images/Solyanka.png \
+    assets/FoodTypes/Burger/BurgerProps.txt \
     images/sample.png \
     users/users.txt
 

@@ -17,7 +17,7 @@ public:
 signals:
     void backToMain();
     void switchToLogin();
-    void userRegIn(const std::string &username);
+    void userRegIn(const std::string &username, const std::string mode);
 
 private:
     QLineEdit *usernameEdit;

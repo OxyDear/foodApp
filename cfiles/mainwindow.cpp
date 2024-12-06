@@ -1,203 +1,8 @@
-// #include "../hfiles/mainwindow.h"
-// #include <QDebug>
-// #include <QGridLayout>
-// #include "../hfiles/ProductWidget.h"
-// #include "../hfiles/registerpage.h"
-// #include "../hfiles/loginpage.h"
-// #include "../hfiles/types.h"
-// #include "../Food.h"
-// #include <iostream>
-// #include "vector"
-// #include <QMessageBox>
-
-// MainWindow::MainWindow(QWidget *parent)
-//     : QMainWindow(parent) {
-//     setupUI();
-// }
-
-// MainWindow::~MainWindow() {}
-
-// void MainWindow::setupUI() {
-//     stackedWidget = new QStackedWidget(this);
-//     setCentralWidget(stackedWidget);
-
-//     // Главная страница
-//     mainPage = new QWidget(this);
-//     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
-
-//     с
-
-//     // Добавляем кнопки категорий
-//     addCategoryButton(categoryLayout, "Types");
-
-//     categoryLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
-
-//     // Заменяем кнопку Auth на QLabel для имени пользователя
-//     userLabel = new QLabel("Пользователь: Не вошел", this); // Изначально не вошел
-//     categoryLayout->addWidget(userLabel); // Добавляем QLabel в layout категорий
-//     addAuthorizeButton(categoryLayout, "Auth");
-
-//     // Убираем кнопку "Auth"
-//     // addAuthorizeButton(categoryLayout, "Auth");
-
-//     // Прокручиваемая область для продуктов
-//     scrollArea = new QScrollArea(this);
-//     scrollArea->setWidgetResizable(true);
-//     scrollWidget = new QWidget();
-//     scrollLayout = new QVBoxLayout(scrollWidget);
-
-//     updateProductList();
-
-//     scrollArea->setWidget(scrollWidget);
-//     mainLayout->addWidget(scrollArea);
-
-//     stackedWidget->addWidget(mainPage);
-
-//     // Страница товара
-//     productPage = new QWidget(this);
-//     QVBoxLayout *productLayout = new QVBoxLayout(productPage);
-
-//     mainImageLabel = new QLabel();
-//     mainImageLabel->setAlignment(Qt::AlignCenter);
-//     mainImageLabel->setFixedSize(300, 300);
-
-//     backButton = new QPushButton("Back", this);
-//     connect(backButton, &QPushButton::clicked, [this]() {
-//         stackedWidget->setCurrentWidget(mainPage);
-//     });
-
-//     productLayout->addWidget(mainImageLabel);
-//     productLayout->addWidget(backButton);
-//     stackedWidget->addWidget(productPage);
-// }
-
-// void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &name) {
-//     QPushButton *categoryButton = new QPushButton(name);
-//     categoryButton->setStyleSheet("QPushButton { padding: 10px; } QPushButton:hover { background-color: gray; }");
-
-//     connect(categoryButton, &QPushButton::clicked, [this]() {
-//         TypesPage *typesPage = new TypesPage(this);
-//         connect(typesPage, &TypesPage::backToMain, this, [this](const QString &type) {
-//             if (!type.isEmpty()) {
-//                 MainWindow::types = type.toStdString();
-//                 updateProductList();
-//             }
-//             stackedWidget->setCurrentWidget(mainPage);
-//         });
-
-//         stackedWidget->addWidget(typesPage);
-//         stackedWidget->setCurrentWidget(typesPage);
-//     });
-
-//     categoryLayout->addWidget(categoryButton);
-// }
-
-// // QStringList getPaths(QString &type) {
-// //     if (type == "Burger") {
-// //         return {}
-// //     }
-// // }
-
-
-// void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name) {
-//     QPushButton *authButton = new QPushButton(name);
-//     authButton->setStyleSheet("QPushButton {"
-//                                   "padding: 10px;"
-//                                   "}"
-//                                   "QPushButton:hover {"
-//                                   "background-color: gray;"
-//                                   "}");
-
-//     connect(authButton, &QPushButton::clicked, [this]() {
-//         RegisterPage *registerpage = new RegisterPage(this);
-//         connect(registerpage, &RegisterPage::backToMain, this, [this]() {
-//             stackedWidget->setCurrentWidget(mainPage);
-//             std::cout << "main" << " ";
-//         });
-
-//         connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage]() {
-//             std::cout << "login1" << " ";
-//             LoginPage* loginpage = new LoginPage(this);
-//             connect(loginpage, &LoginPage::backToMain, this, [this]() {
-//                 stackedWidget->setCurrentWidget(mainPage);
-//                 std::cout << "main" << " ";
-//             });
-//             connect(loginpage, &LoginPage::switchToRegister, [this, registerpage]() {
-//                 stackedWidget->setCurrentWidget(registerpage);
-//                 std::cout << "register1" << " ";
-//             });
-
-//             connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
-//                 setCurrentUser(username); // Устанавливаем текущего пользователя
-//             });
-
-//             stackedWidget->addWidget(loginpage);
-//             stackedWidget->setCurrentWidget(loginpage);
-//             std::cout << "login2" << " ";
-//         });
-
-//         connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
-//             setCurrentUser(username); // Устанавливаем текущего пользователя
-//         });
-
-//         stackedWidget->addWidget(registerpage);
-//         stackedWidget->setCurrentWidget(registerpage);
-//         std::cout << "register2" << " ";
-//     });
-
-
-//     // Добавляем кнопку в горизонтальный layout
-//     categoryLayout->addWidget(authButton);
-// }
-
-// void MainWindow::addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price) {
-//     ProductWidget *productWidget = new ProductWidget(imagePath, name, mass, price);
-//     connect(productWidget, &ProductWidget::clicked, [this, imagePath, name]() {
-//         showProductPage(imagePath + "/images/" + name);
-//     });
-
-//     scrollLayout->addWidget(productWidget);
-// }
-
-// void MainWindow::showProductPage(const std::string &imagePath) {
-//     QPixmap pixmap(QString::fromStdString(imagePath));
-//     if (pixmap.isNull()) {
-//         qDebug() << "Ошибка загрузки изображения:" << imagePath;
-//     } else {
-//         mainImageLabel->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio));
-//         stackedWidget->setCurrentWidget(productPage);
-//     }
-// }
-
-// void MainWindow::updateProductList() {
-//     // Очистить текущий контент
-//     QLayoutItem* item;
-//     while ((item = scrollLayout->takeAt(0)) != nullptr) {
-//         delete item->widget(); // Удаляем виджет
-//         delete item; // Удаляем элемент
-//     }
-
-//     // Здесь вы можете заново заполнить scrollLayout с нужными продуктамий
-//     Food *reader = new Food(types);
-//     std::vector<std::string> prods = reader->setProdsList();
-//     std::vector<std::vector<std::string>> props = reader->setPropsList();
-
-//     // Заполнение прокручиваемой области
-//     for (int i = 0; i < prods.size(); ++i) {
-//         addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
-//     }
-// }
-
-// void MainWindow::setCurrentUser(const std::string &username) {
-//     if (currentUser) {
-//         delete currentUser; // Удаляем предыдущего пользователя
-//     }
-//     User *currentUser = new User(username); // Создаем нового пользователя
-//     std::cout << currentUser->getUsername();
-//     userLabel->setText(QString::fromStdString(currentUser->getUsername()));
-//     std::cout << "Пользователь вошел: " << currentUser->getUsername() << std::endl;
-// }
 #include "../hfiles/mainwindow.h"
+#include "../hfiles/adminpage.h"
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -237,13 +42,34 @@ void MainWindow::setupUI() {
     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
     mainLayout->setContentsMargins(20, 20, 20, 20); // Отступы
 
+    QPushButton *addButton = new QPushButton("Add", this);
+    addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px; }"
+                             "QPushButton:hover { color: #bbb; }");
+    addButton->setVisible(false); // Initially hidden
+
+    connect(addButton, &QPushButton::clicked, this, [this]() {
+        AdminPage *adminPage = new AdminPage(this);
+        connect(adminPage, &AdminPage::backToMain, this, [this]() {
+            stackedWidget->setCurrentWidget(mainPage);
+        });
+        connect(adminPage, &AdminPage::adminActionTriggeredAdd, this, [this](const std::string& username) {
+            updateUserStatusAdd(username);
+        });
+        connect(adminPage, &AdminPage::adminActionTriggeredDelete, this, [this](const std::string& username) {
+            std::cout << "DELETE" << " ";
+            updateUserStatusDelete(username);
+        });
+        stackedWidget->addWidget(adminPage);
+        stackedWidget->setCurrentWidget(adminPage);
+    });
+
     RegisterPage *registerpage = new RegisterPage(this);
     connect(registerpage, &RegisterPage::backToMain, this, [this]() {
         stackedWidget->setCurrentWidget(mainPage);
         std::cout << "main" << " ";
     });
 
-    connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage]() {
+    connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage, addButton]() {
         std::cout << "login1" << " ";
         LoginPage* loginpage = new LoginPage(this);
         connect(loginpage, &LoginPage::backToMain, this, [this]() {
@@ -255,8 +81,13 @@ void MainWindow::setupUI() {
             std::cout << "register1" << " ";
         });
 
-        connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
+        connect(loginpage, &LoginPage::userLoggedIn, this, [this, addButton](const std::string& username, const std::string mode) {
             setCurrentUser(username); // Устанавливаем текущего пользователя
+            if (mode == "1") {
+                addButton->setVisible(true); // Show the "Добавить" button when mode=1
+            } else {
+                addButton->setVisible(false); // Hide otherwise
+            }
         });
 
         stackedWidget->addWidget(loginpage);
@@ -264,8 +95,13 @@ void MainWindow::setupUI() {
         std::cout << "login2" << " ";
     });
 
-    connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
+    connect(registerpage, &RegisterPage::userRegIn, this, [this, addButton](const std::string& username, const std::string mode) {
         setCurrentUser(username); // Устанавливаем текущего пользователя
+        if (mode == "1") {
+            addButton->setVisible(true); // Show the "Добавить" button when mode=1
+        } else {
+            addButton->setVisible(false); // Hide otherwise
+        }
     });
 
     stackedWidget->addWidget(registerpage);
@@ -287,7 +123,7 @@ void MainWindow::setupUI() {
     addCategoryButton(categoryLayout, "Типы");
 
     // Кнопка авторизации
-    addAuthorizeButton(categoryLayout, "Вход");
+    addAuthorizeButton(categoryLayout, "Вход", addButton);
 
     // Прокручиваемая область для продуктов
     scrollArea = new QScrollArea(this);
@@ -319,7 +155,7 @@ void MainWindow::setupUI() {
 
     stackedWidget->addWidget(productPage);
 
-    updateProductList(); // Загружаем список продуктов
+    updateProductList("", ""); // Загружаем список продуктов
 }
 
 void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &name) {
@@ -328,10 +164,10 @@ void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &n
                                   "QPushButton:hover { color: #bbb; }");
     connect(categoryButton, &QPushButton::clicked, [this]() {
         TypesPage *typesPage = new TypesPage(this);
-        connect(typesPage, &TypesPage::backToMain, this, [this](const QString &type) {
+        connect(typesPage, &TypesPage::backToMain, this, [this](const QString &type, const std::string pricelow, const std::string pricemax) {
             if (!type.isEmpty()) {
                 MainWindow::types = type.toStdString();
-                updateProductList();
+                updateProductList(pricelow, pricemax);
             }
             stackedWidget->setCurrentWidget(mainPage);
         });
@@ -342,84 +178,57 @@ void MainWindow::addCategoryButton(QHBoxLayout *categoryLayout, const QString &n
     categoryLayout->addWidget(categoryButton);
 }
 
-void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name) {
+void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name, QPushButton* addButton) {
     QPushButton *authButton = new QPushButton(name);
     authButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px; }"
                               "QPushButton:hover { color: #bbb; }");
 
-    RegisterPage *registerpage = new RegisterPage(this);
-    connect(registerpage, &RegisterPage::backToMain, this, [this]() {
-        stackedWidget->setCurrentWidget(mainPage);
-        std::cout << "main" << " ";
-    });
+    // QPushButton *addButton = new QPushButton("Добавить", this);
+    // addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px; }"
+    //                          "QPushButton:hover { color: #bbb; }");
+    // addButton->setVisible(false); // Initially hidden
 
-    connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage]() {
-        std::cout << "login1" << " ";
-        LoginPage* loginpage = new LoginPage(this);
-        connect(loginpage, &LoginPage::backToMain, this, [this]() {
-            stackedWidget->setCurrentWidget(mainPage);
-            std::cout << "main" << " ";
-        });
-        connect(loginpage, &LoginPage::switchToRegister, [this, registerpage]() {
-            stackedWidget->setCurrentWidget(registerpage);
-            std::cout << "register1" << " ";
-        });
-
-        connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
-            setCurrentUser(username); // Устанавливаем текущего пользователя
-        });
-
-        stackedWidget->addWidget(loginpage);
-        stackedWidget->setCurrentWidget(loginpage);
-        std::cout << "login2" << " ";
-    });
-
-    connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
-        setCurrentUser(username); // Устанавливаем текущего пользователя
-    });
-
-    stackedWidget->addWidget(registerpage);
-    stackedWidget->setCurrentWidget(registerpage);
-    std::cout << "register2" << " ";
-
-    connect(authButton, &QPushButton::clicked, [this]() {
+    connect(authButton, &QPushButton::clicked, [this, addButton]() {
         RegisterPage *registerpage = new RegisterPage(this);
         connect(registerpage, &RegisterPage::backToMain, this, [this]() {
             stackedWidget->setCurrentWidget(mainPage);
-            std::cout << "main" << " ";
         });
 
-        connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage]() {
-            std::cout << "login1" << " ";
+        connect(registerpage, &RegisterPage::switchToLogin, this, [this, registerpage, addButton] {
             LoginPage* loginpage = new LoginPage(this);
             connect(loginpage, &LoginPage::backToMain, this, [this]() {
                 stackedWidget->setCurrentWidget(mainPage);
-                std::cout << "main" << " ";
-            });
-            connect(loginpage, &LoginPage::switchToRegister, [this, registerpage]() {
-                stackedWidget->setCurrentWidget(registerpage);
-                std::cout << "register1" << " ";
             });
 
-            connect(loginpage, &LoginPage::userLoggedIn, this, [this](const std::string& username) {
-                setCurrentUser(username); // Устанавливаем текущего пользователя
+            connect(loginpage, &LoginPage::userLoggedIn, this, [this, addButton](const std::string& username, const std::string mode) {
+                setCurrentUser(username);
+                if (mode == "1") {
+                    addButton->setVisible(true); // Show the "Добавить" button when mode=1
+                } else {
+                    addButton->setVisible(false); // Hide otherwise
+                }
             });
 
             stackedWidget->addWidget(loginpage);
             stackedWidget->setCurrentWidget(loginpage);
-            std::cout << "login2" << " ";
         });
 
-        connect(registerpage, &RegisterPage::userRegIn, this, [this](const std::string& username) {
-            setCurrentUser(username); // Устанавливаем текущего пользователя
+        connect(registerpage, &RegisterPage::userRegIn, this, [this, addButton](const std::string& username, const std::string mode) {
+            setCurrentUser(username);
+            if (mode == "1") {
+                addButton->setVisible(true); // Show the "Добавить" button when mode=1
+            } else {
+                addButton->setVisible(false); // Hide otherwise
+            }
         });
 
         stackedWidget->addWidget(registerpage);
         stackedWidget->setCurrentWidget(registerpage);
-        std::cout << "register2" << " ";
     });
 
+    // Add the addButton to the layout
     categoryLayout->addWidget(authButton);
+    categoryLayout->addWidget(addButton);
 }
 
 void MainWindow::addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price) {
@@ -461,13 +270,18 @@ void MainWindow::showProductPage(const std::string &imagePath, std::vector<std::
     // Создаем вертикальный компоновщик для свойств
     QVBoxLayout *textLayout = new QVBoxLayout();
     textLayout->setSpacing(5); // Расстояние между элементами
-    textLayout->setContentsMargins(0, 0, 0, 0); // Убираем отступы у вертикального компоновщика
+    textLayout->setContentsMargins(10, 10, 10, 10); // Установите отступы вокруг layout
 
     // Добавляем содержимое вектора props
     for (const auto &p : props) {
-        QLabel *propLabel = new QLabel(QString::fromStdString(p)); // Создаем метку для каждого свойства
-        propLabel->setStyleSheet("margin: 0; padding: 0; font-size: 14px;"); // Убираем отступы и устанавливаем размер шрифта
-        textLayout->addWidget(propLabel); // Добавляем метку в вертикальный компоновщик
+        QHBoxLayout *hLayout = new QHBoxLayout();
+        QLabel *propLabel = new QLabel(QString::fromStdString(p));
+        propLabel->setStyleSheet("margin: 0; padding: 0; font-size: 14px;");
+        hLayout->addWidget(propLabel);
+        hLayout->setContentsMargins(0, 0, 0, 0); // Убираем отступы у горизонтального компоновщика
+        hLayout->addStretch(); // Добавляем растяжение для создания отступов справа
+
+        textLayout->addLayout(hLayout);
     }
 
     // Добавляем вертикальный виджет с текстом под изображением
@@ -491,7 +305,7 @@ void MainWindow::showProductPage(const std::string &imagePath, std::vector<std::
     stackedWidget->setCurrentWidget(productDetailsPage);
 }
 
-void MainWindow::updateProductList() {
+void MainWindow::updateProductList(std::string pricelow, std::string pricemax) {
     // Очистить текущий контент
     QLayoutItem* item;
     while ((item = scrollLayout->takeAt(0)) != nullptr) {
@@ -506,8 +320,111 @@ void MainWindow::updateProductList() {
 
     // Заполнение прокручиваемой области
     for (int i = 0; i < prods.size(); ++i) {
-        addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
+        if (pricelow == "" and pricemax == "") {
+            try {
+                addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
+            } catch(...) {
+                continue;
+            }
+        } else if (pricelow == "") {
+            if (stod(props[i][props[i].size()-1]) <= stod(pricemax)) {
+                try {
+                    addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
+                } catch(...) {
+                    continue;
+                }
+            }
+        } else if (pricemax == "") {
+            if (stod(props[i][props[i].size()-1]) >= stod(pricelow)) {
+                try {
+                    addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
+                } catch(...) {
+                    continue;
+                }
+            }
+        } else {
+            if (stod(props[i][props[i].size()-1]) <= stod(pricemax) and stod(props[i][props[i].size()-1]) >= stod(pricelow) ) {
+                try {
+                    addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
+                } catch(...) {
+                    continue;
+                }
+            }
+        }
+        // addProduct(":/assets/FoodTypes/" + types, prods[i], props[i][props[i].size()-2], props[i][props[i].size()-1]);
     }
+}
+
+void MainWindow::updateUserStatusAdd(const std::string &username) {
+    QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
+
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл users.txt";
+        return;
+    }
+
+    QStringList lines;
+    QTextStream in(&file);
+
+    // Чтение всех строк файла
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        // Проверка, является ли текущая строка той, что нам нужна
+        if (line.startsWith(QString::fromStdString(username) + ":")) {
+            QStringList parts = line.split(":");
+            if (parts.size() > 2) {
+                // Изменение последнего элемента на 1
+                parts[2] = "1";
+                line = parts.join(":");
+            }
+        }
+        lines.append(line);
+    }
+
+    // Перезапись файла с обновленными данными
+    file.resize(0); // Очистка файла
+    QTextStream out(&file);
+    for (const QString &line : lines) {
+        out << line << "\n"; // Запись строк обратно в файл
+    }
+
+    file.close();
+}
+
+void MainWindow::updateUserStatusDelete(const std::string &username) {
+    QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
+
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл users.txt";
+        return;
+    }
+
+    QStringList lines;
+    QTextStream in(&file);
+
+    // Чтение всех строк файла
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        // Проверка, является ли текущая строка той, что нам нужна
+        if (line.startsWith(QString::fromStdString(username) + ":")) {
+            QStringList parts = line.split(":");
+            if (parts.size() > 2) {
+                // Изменение последнего элемента на 1
+                parts[2] = "0";
+                line = parts.join(":");
+            }
+        }
+        lines.append(line);
+    }
+
+    // Перезапись файла с обновленными данными
+    file.resize(0); // Очистка файла
+    QTextStream out(&file);
+    for (const QString &line : lines) {
+        out << line << "\n"; // Запись строк обратно в файл
+    }
+
+    file.close();
 }
 
 void MainWindow::setCurrentUser(const std::string &username) {

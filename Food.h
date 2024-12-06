@@ -23,8 +23,9 @@ public:
     std::vector<std::string> readInfo() {
         File fileManager;
         try {
-            int fd1 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/Qt/app/assets/FoodTypes/" + type + "/" + type + "Types.txt");
-            int fd2 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/Qt/app/assets/FoodTypes/" + type + "/" + type + "Props.txt");
+            // /Users/oxydear/Documents/Ivan's Mac/Qt/app/    /Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/Burger
+            int fd1 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/" + type + "/" + type + "Types.txt");
+            int fd2 = fileManager.OpenFile("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/" + type + "/" + type + "Props.txt");
             char* buffer1 = new char[1000];
             char* buffer2 = new char[1000];
             fileManager.ReadFile(fd1, buffer1, 1000);
@@ -56,7 +57,7 @@ public:
             prodsData.erase(0, pos + 1);
         }
 
-        productsList.push_back(prodsData);
+        // productsList.push_back(prodsData);
 
 //        for (const auto& el : productsList) {
 //            std::cout << el << std::endl;

@@ -90,6 +90,7 @@ void LoginPage::handleLogin() {
     // Открываем файл для чтения
     QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/users/users.txt");
     bool userFound = false;
+    std::string mode;
 
     // Проверяем, существует ли файл
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -100,8 +101,9 @@ void LoginPage::handleLogin() {
         while (in.readLineInto(&line)) {
             QStringList credentials = line.split(":");
             // QString::fromStdString(hashPassword(password.toStdString()))
-            if (credentials.size() == 2 && credentials[0] == username && credentials[1] == password) {
+            if (credentials.size() == 3 && credentials[0] == username && credentials[1] == password) {
                 userFound = true; // Логин и пароль совпадают
+                mode = credentials[2].toStdString();
                 break; // Выходим из цикла
             }
         }
@@ -119,7 +121,7 @@ void LoginPage::handleLogin() {
 
     // Если вход успешен
     if (userFound) {
-        emit userLoggedIn(username.toStdString());
+        emit userLoggedIn(username.toStdString(), mode);
     }
     // QMessageBox::information(this, "Вход", "Вход выполнен как: " + username);
     emit backToMain();

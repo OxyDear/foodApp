@@ -111,13 +111,13 @@ void RegisterPage::handleRegister() {
     // Открываем файл для записи
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-        out << username << ":" << password << "\n"; // Записываем в файл
+        out << username << ":" << password << ":0" << "\n"; // Записываем в файл
         file.close(); // Закрываем файл
     } else {
         // QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл для записи.");
         return; // Выходим из функции, если файл не открывается
     }
 
-    emit userRegIn(username.toStdString());
+    emit userRegIn(username.toStdString(), "0");
     emit backToMain(); // Возвращаем на главную страницу
 }

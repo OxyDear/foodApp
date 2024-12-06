@@ -14,7 +14,7 @@ public:
     explicit TypesPage(QWidget *parent = nullptr);
 
 signals:
-    void backToMain(const QString &type); // Сигнал для возврата на главную страницу с параметром
+    void backToMain(const QString &type, const std::string pricelow, const std::string pricemax); // Сигнал для возврата на главную страницу с параметром
 
 private:
     void setupUI();
