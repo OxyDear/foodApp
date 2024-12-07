@@ -104,7 +104,7 @@ void AdminPage::showUsernameInput(QVBoxLayout *layout, const std::string &action
         connect(confirmButton, &QPushButton::clicked, this, [this, usernameInput, inputLayout, layout, confirmButton, action]() {
             QString username = usernameInput->text();
             // Process the username input here (e.g., emit a signal or handle it directly)
-            if (std::strcmp(action.c_str(), "Админ Добавить")) {
+            if (action == "Админ Добавить") {
                 std::cout << "ADD" << " ";
                 emit adminActionTriggeredAdd(username.toStdString());
             }

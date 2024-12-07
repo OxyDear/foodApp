@@ -1,4 +1,4 @@
 Solyanka;
 ;Beefee CheeseburgerSolyanka;
 
-signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;;Bee Burg;Bee Burger;Bee Burger;;Bee Burger;Bee Burger;Bee Burger;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;;Bee Burg;Bee Burger;;Bee Burger;Bee Burger;Bee Burger;;Bee Burger;
