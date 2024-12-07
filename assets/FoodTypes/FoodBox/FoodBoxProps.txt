@@ -1,4 +1,22 @@
-chicken;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.0;
-nuggets;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.5;
-grilled sausages;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;500;14.0;
-falafel;french fries;cabbage;pickled cucumber;tomato;arabic flatbread;signature garlic sauce;ketchup;vegetarian;500;14.0;
+;Beefee Cheeseburger
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;;Beefee Cheeseburger;Beefee Cheeseburger
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;chicken cutlet;pickled cucumber;tomato;iceberg lettuce;signature garlic sauce;burger sauce;300;9.5;
+signature bun;beef cutlet;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;300;10.5;
+signature bun;chicken cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;10.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
+signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;

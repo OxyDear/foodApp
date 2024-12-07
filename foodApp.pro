@@ -182,6 +182,7 @@ DISTFILES += \
     assets/FoodTypes/Soup/SoupTypes.txt \
     assets/FoodTypes/Soup/images/Solyanka.png \
     assets/FoodTypes/Burger/BurgerProps.txt \
+    assets/adds.txt \
     images/sample.png \
     users/users.txt
 

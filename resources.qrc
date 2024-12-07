@@ -63,5 +63,6 @@
         <file>assets/FoodTypes/Soup/SoupTypes.txt</file>
         <file>assets/FoodTypes/Soup/images/Solyanka.png</file>
         <file>assets/FoodTypes/Burger/BurgerProps.txt</file>
+        <file>assets/adds.txt</file>
     </qresource>
 </RCC>

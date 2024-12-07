@@ -1,6 +1,7 @@
 #include "../hfiles/mainwindow.h"
 #include "../hfiles/adminpage.h"
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
@@ -58,6 +59,21 @@ void MainWindow::setupUI() {
         connect(adminPage, &AdminPage::adminActionTriggeredDelete, this, [this](const std::string& username) {
             std::cout << "DELETE" << " ";
             updateUserStatusDelete(username);
+        });
+        connect(adminPage, &AdminPage::adminActionTriggeredChange, this, [this](const std::string& name, const std::string& editedName) {
+            std::cout << "CHANGE" << " ";
+            updateName(name, editedName);
+            updateProductList("", "");
+        });
+        connect(adminPage, &AdminPage::adminActionTriggeredDeleteOne, this, [this](const std::string& name) {
+            std::cout << "DELE" << " ";
+            updateDelete(name);
+            updateProductList("", "");
+        });
+        connect(adminPage, &AdminPage::adminActionTriggeredAddOne, this, [this](const std::string& name, const std::string& desc) {
+            std::cout << "ADD" << " ";
+            updateAdd(name, desc);
+            updateProductList("", "");
         });
         stackedWidget->addWidget(adminPage);
         stackedWidget->setCurrentWidget(adminPage);
@@ -243,13 +259,52 @@ void MainWindow::addProduct(const std::string &imagePath, const std::string &nam
         }
     }
     connect(productWidget, &ProductWidget::clicked, [this, imagePath, name, prop]() {
-        showProductPage(imagePath + "/images/" + name, prop);
+
+        QFile adds("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/adds.txt");
+
+        if (!adds.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            std::cerr << "Could not open file" << std::endl;
+        }
+
+        QTextStream ins(&adds);
+        QString content = ins.readAll(); // Read the entire file content
+        adds.resize(0); // Clear the file for writing
+        QStringList is = content.split(';');
+
+        bool ad = false;
+
+        for (auto &el : is) {
+
+            int pos;
+            std::string token;
+            std::string dataEl = el.toStdString();
+
+            while ((pos = dataEl.find(':')) != std::string::npos) {
+                token = dataEl.substr(0, pos);
+                dataEl.erase(0, pos + 1);
+            }
+
+            std::string tk = token.c_str();
+            std::string nk = name.c_str();
+            if (!token.empty() and token == name) {
+                QFile fl(QString::fromStdString(imagePath+"/images/"+dataEl));
+                showProductPage(imagePath + "/images/", dataEl, prop);
+                ad = true;
+            } else {
+                continue;
+            }
+        }
+        if (!ad) {
+            showProductPage(imagePath + "/images", name, prop);
+        }
+
+        // showProductPage(imagePath + "/images/" + name, prop);
     });
 
     scrollLayout->addWidget(productWidget);
 }
 
-void MainWindow::showProductPage(const std::string &imagePath, std::vector<std::string> props) {
+void MainWindow::showProductPage(const std::string &imagePath, const std::string &name, std::vector<std::string> props) {
     // Создаем новый виджет для отображения страницы товара
     QWidget *productDetailsPage = new QWidget(this);
     QVBoxLayout *productLayout = new QVBoxLayout(productDetailsPage);
@@ -257,15 +312,19 @@ void MainWindow::showProductPage(const std::string &imagePath, std::vector<std::
     productLayout->setSpacing(10); // Расстояние между элементами
 
     // Загружаем изображение
-    QPixmap pixmap(QString::fromStdString(imagePath));
+    QPixmap pixmap(QString::fromStdString(imagePath+"/"+name));
     QLabel *mainImageLabel = new QLabel(); // Создаем метку для изображения
     if (pixmap.isNull()) {
-        qDebug() << "Ошибка загрузки изображения:" << imagePath;
+        QDir dir(QString::fromStdString(imagePath));
+        QStringList allEntries = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+        mainImageLabel->setPixmap(QPixmap(QString::fromStdString(imagePath+"/"+allEntries[0].toStdString())).scaled(200, 200, Qt::KeepAspectRatio));
     } else {
-        mainImageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio));
-        mainImageLabel->setAlignment(Qt::AlignLeft); // Выравниваем изображение по центру
-        productLayout->addWidget(mainImageLabel); // Добавляем изображение в основной компоновщик
+        QFile fl(QString::fromStdString(imagePath+"/"+name));
+        mainImageLabel->setPixmap(QPixmap(QString::fromStdString(imagePath+"/"+name)).scaled(200, 100, Qt::KeepAspectRatio).scaled(200, 200, Qt::KeepAspectRatio));
     }
+    // mainImageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio));
+    mainImageLabel->setAlignment(Qt::AlignLeft); // Выравниваем изображение по центру
+    productLayout->addWidget(mainImageLabel); // Добавляем изображение в основной компоновщик
 
     // Создаем вертикальный компоновщик для свойств
     QVBoxLayout *textLayout = new QVBoxLayout();
@@ -425,6 +484,188 @@ void MainWindow::updateUserStatusDelete(const std::string &username) {
     }
 
     file.close();
+}
+
+void MainWindow::updateName(const std::string &name, const std::string &editedName) {
+    std::vector<std::string> filePaths = {"Burger/BurgerTypes.txt", "Drink/DrinkTypes.txt", "FoodBox/FoodTypes.txt", "Salad/SaladTypes.txt", "Sauce/SauceTypes.txt", "Snack/SnackTypes.txt", "Soup/SoupTypes.txt"};
+    std::vector<std::string> imgPaths = {"Burger", "Drink", "FoodBox", "Salad", "Sauce", "Snack", "Soup"};
+    for (int i = 0; i < filePaths.size(); ++i) {
+        QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(filePaths[i]));
+
+        // Open the file for reading and writing
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            std::cerr << "Could not open file: " << filePaths[i] << std::endl;
+            continue; // Move to the next file
+        }
+
+        QTextStream in(&file);
+        QString content = in.readAll(); // Read the entire file content
+        file.resize(0); // Clear the file for writing
+
+        // Split the content by ';' and replace occurrences of name
+        QStringList items = content.split(';');
+        for (QString &item : items) {
+            if (item.trimmed() == QString::fromStdString(name)) {
+                // img.rename("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i]) + "/images/" + QString::fromStdString(editedName) + ".png");
+                QFile adds("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/adds.txt");
+
+                if (!adds.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                    std::cerr << "Could not open file" << std::endl;
+                    continue; // Move to the next file
+                }
+
+                QTextStream ins(&adds);
+                QString content = ins.readAll(); // Read the entire file content
+                adds.resize(0); // Clear the file for writing
+                QStringList is = content.split(';');
+                bool as = false;
+
+                for (int i = 0; i < is.size(); ++i) {
+                    int pos;
+                    std::string token;
+                    std::string dataEl = is[i].toStdString();
+
+                    while ((pos = dataEl.find(':')) != std::string::npos) {
+                        token = dataEl.substr(0, pos);
+                        dataEl.erase(0, pos + 1);
+                    }
+
+                    if (dataEl == editedName) {
+                        is[i] = QString::fromStdString(editedName + ":" + item.toStdString());
+                        as = true;
+                    }
+                }
+
+                if (!as) {
+                    is << QString::fromStdString(editedName + ":" + item.toStdString() + ";");
+                }
+                QTextStream out(&adds);
+                out << is.join(';'); // Join items with ';' and add the delimiter at the end
+                adds.close();
+
+                // adds[editedName] = item.toStdString();
+                item = QString::fromStdString(editedName); // Replace with editedName
+                break;
+            }
+
+        }
+
+        // Write the modified content back to the file
+        QTextStream out(&file);
+        out << items.join(';'); // Join items with ';' and add the delimiter at the end
+
+        file.close(); // Close the file
+    }
+}
+
+void MainWindow::updateDelete(const std::string &name) {
+    std::vector<std::string> filePaths = {"Burger/BurgerTypes.txt", "Drink/DrinkTypes.txt", "FoodBox/FoodTypes.txt", "Salad/SaladTypes.txt", "Sauce/SauceTypes.txt", "Snack/SnackTypes.txt", "Soup/SoupTypes.txt"};
+    std::vector<std::string> imgPaths = {"Burger", "Drink", "FoodBox", "Salad", "Sauce", "Snack", "Soup"};
+    for (int i = 0; i < filePaths.size(); ++i) {
+        QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(filePaths[i]));
+
+        // Open the file for reading and writing
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            std::cerr << "Could not open file: " << filePaths[i] << std::endl;
+            continue; // Move to the next file
+        }
+
+        QTextStream in(&file);
+        QString content = in.readAll(); // Read the entire file content
+        file.resize(0); // Clear the file for writing
+
+        // Split the content by ';' and replace occurrences of name
+        QStringList items = content.split(';');
+        for (int i = 0; i < items.size(); ++i) {
+            if (items[i].trimmed() == QString::fromStdString(name)) {
+                QFile fil("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i])+"/"+QString::fromStdString(imgPaths[i])+"Props.txt");
+
+                if (!fil.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                    std::cerr << "Could not open file" << std::endl;
+                    continue; // Move to the next file
+                }
+
+                QTextStream ins(&fil);
+                QString content = ins.readAll(); // Read the entire file content
+                fil.resize(0); // Clear the file for writing
+                QStringList is = content.split('\n');
+
+                for (int i = 0; i < is.size(); ++i) {
+                    std::string dataEl = is[i].toStdString();
+
+                    if (dataEl == name) {
+                        is.erase(is.begin()+i);
+                    }
+                }
+
+                QTextStream out(&fil);
+                out << is.join('\n'); // Join items with '\n' and add the delimiter at the end
+                fil.close();
+
+                items.erase(items.begin() + i); // Replace with editedName
+                break;
+            }
+
+        }
+
+        // Write the modified content back to the file
+        QTextStream out(&file);
+        out << items.join(';'); // Join items with ';' and add the delimiter at the end
+
+        file.close(); // Close the file
+    }
+}
+
+void MainWindow::updateAdd(const std::string &name, const std::string &desc) {
+    std::vector<std::string> filePaths = {"Burger/BurgerTypes.txt", "Drink/DrinkTypes.txt", "FoodBox/FoodTypes.txt", "Salad/SaladTypes.txt", "Sauce/SauceTypes.txt", "Snack/SnackTypes.txt", "Soup/SoupTypes.txt"};
+    std::vector<std::string> imgPaths = {"Burger", "Drink", "FoodBox", "Salad", "Sauce", "Snack", "Soup"};
+    for (int i = 0; i < filePaths.size(); ++i) {
+        QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(filePaths[i]));
+        QFile fil("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i])+"/"+QString::fromStdString(imgPaths[i])+"Props.txt");
+
+
+        // Open the file for reading and writing
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            std::cerr << "Could not open file" << std::endl;
+            continue; // Move to the next file
+        }
+
+        if (!fil.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            std::cerr << "Could not open file" << std::endl;
+            continue; // Move to the next file
+        }
+
+        QTextStream in(&file);
+        QString content = in.readAll(); // Read the entire file content
+        file.resize(0); // Clear the file for writing
+
+        QTextStream ins(&fil);
+        QString cont = ins.readAll(); // Read the entire file content
+        fil.resize(0); // Clear the file for writing
+
+        // Split the content by ';' and replace occurrences of name
+        QStringList items = content.split(';');
+        if (items.back() == '\n') {
+            items.pop_back();
+        }
+        QStringList props = cont.split('\n');
+        if (props.back().isEmpty()) {
+            props.pop_back();
+        }
+        items << QString::fromStdString(name);
+        props << QString::fromStdString(desc);
+
+        // Write the modified content back to the file
+        QTextStream out(&file);
+        QTextStream outs(&fil);
+        out << items.join(';'); // Join items with ';' and add the delimiter at the end
+        out << ";";
+        outs << props.join('\n'); // Join items with '\n' and add the delimiter at the end
+        outs << '\n';
+
+        file.close(); // Close the file
+        fil.close();
+    }
 }
 
 void MainWindow::setCurrentUser(const std::string &username) {

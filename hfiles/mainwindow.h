@@ -23,12 +23,15 @@ private:
     void setupUI();
     void addCategoryButton(QHBoxLayout *categoryLayout, const QString &name);
     void addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price);
-    void showProductPage(const std::string &imagePath, std::vector<std::string> props);
+    void showProductPage(const std::string &imagePath, const std::string &name, std::vector<std::string> props);
     void updateProductList(std::string pricelow, std::string pricemax);
     void setCurrentUser(const std::string &username); // Метод для установки текущего пользователя
     void addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &name, QPushButton* addButton);
     void updateUserStatusAdd(const std::string &username);
     void updateUserStatusDelete(const std::string &username);
+    void updateName(const std::string &name, const std::string &editedName);
+    void updateDelete(const std::string &name);
+    void updateAdd(const std::string &name, const std::string &desc);
 
 private:
     QScrollArea *scrollArea;
@@ -44,6 +47,7 @@ private:
 
     QLabel *userLabel; // QLabel для отображения имени пользователя
     User *currentUser=nullptr; // Указатель на текущего пользователя
+    std::map<std::string, std::string> adds;
 };
 
 #endif // MAINWINDOW_H
