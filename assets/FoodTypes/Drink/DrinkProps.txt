@@ -16,5 +16,3 @@ orange-lime;250;4.0;
 ginger-honey-lemon;250;4.0;
 raspberry-grapefruit;250;4.0;
 sea buckthorn-orange;250;4.0;
-signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;
-signature bun;beef cutlet;cheese;pickled cucumber;tomato;Iceberg lettuce;signature garlic sauce;burger sauce;320;11.5;

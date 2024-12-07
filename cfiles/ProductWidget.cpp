@@ -4,7 +4,7 @@
 #include <QDir>
 #include <iostream>
 
-ProductWidget::ProductWidget(const std::string &imagePath, const std::string name, const std::string &mass, const std::string &price, QWidget *parent)
+ProductWidget::ProductWidget(const std::string &imagePath, const std::string name, QWidget *parent)
     : QWidget(parent), imagePath(imagePath) {
 
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -59,7 +59,11 @@ ProductWidget::ProductWidget(const std::string &imagePath, const std::string nam
     out << is.join(';'); // Join items with ';' and add the delimiter at the end
     adds.close();
 
-    productName = new QLabel(QString::fromStdString(name+" "+mass+" "+price));
+    productName = new QLabel(QString::fromStdString(name));
+    QFont font = productName->font();
+    font.setPointSize(18);
+    font.setBold(true);
+    productName->setFont(font);
 
     layout->addWidget(productImage);
     layout->addWidget(productName);

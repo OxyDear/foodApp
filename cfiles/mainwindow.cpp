@@ -248,7 +248,7 @@ void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &
 }
 
 void MainWindow::addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price) {
-    ProductWidget *productWidget = new ProductWidget(imagePath, name, mass, price);
+    ProductWidget *productWidget = new ProductWidget(imagePath, name);
     Food* reader = new Food(types);
     std::vector<std::vector<std::string>> props = reader->setPropsList();
     std::vector<std::string> prop;
@@ -311,20 +311,23 @@ void MainWindow::showProductPage(const std::string &imagePath, const std::string
     productLayout->setContentsMargins(10, 10, 10, 10); // Отступы у вертикального компоновщика
     productLayout->setSpacing(10); // Расстояние между элементами
 
+    // Создаем горизонтальный компоновщик для изображения и свойств
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+
     // Загружаем изображение
-    QPixmap pixmap(QString::fromStdString(imagePath+"/"+name));
+    QPixmap pixmap(QString::fromStdString(imagePath + "/" + name));
     QLabel *mainImageLabel = new QLabel(); // Создаем метку для изображения
     if (pixmap.isNull()) {
         QDir dir(QString::fromStdString(imagePath));
         QStringList allEntries = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
-        mainImageLabel->setPixmap(QPixmap(QString::fromStdString(imagePath+"/"+allEntries[0].toStdString())).scaled(200, 200, Qt::KeepAspectRatio));
+        mainImageLabel->setPixmap(QPixmap(QString::fromStdString(imagePath + "/" + allEntries[0].toStdString())).scaled(200, 200, Qt::KeepAspectRatio));
     } else {
-        QFile fl(QString::fromStdString(imagePath+"/"+name));
-        mainImageLabel->setPixmap(QPixmap(QString::fromStdString(imagePath+"/"+name)).scaled(200, 100, Qt::KeepAspectRatio).scaled(200, 200, Qt::KeepAspectRatio));
+        mainImageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio));
     }
-    // mainImageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio));
     mainImageLabel->setAlignment(Qt::AlignLeft); // Выравниваем изображение по центру
-    productLayout->addWidget(mainImageLabel); // Добавляем изображение в основной компоновщик
+
+    // Добавляем изображение в основной компоновщик
+    mainLayout->addWidget(mainImageLabel);
 
     // Создаем вертикальный компоновщик для свойств
     QVBoxLayout *textLayout = new QVBoxLayout();
@@ -332,21 +335,37 @@ void MainWindow::showProductPage(const std::string &imagePath, const std::string
     textLayout->setContentsMargins(10, 10, 10, 10); // Установите отступы вокруг layout
 
     // Добавляем содержимое вектора props
-    for (const auto &p : props) {
-        QHBoxLayout *hLayout = new QHBoxLayout();
-        QLabel *propLabel = new QLabel(QString::fromStdString(p));
-        propLabel->setStyleSheet("margin: 0; padding: 0; font-size: 14px;");
-        hLayout->addWidget(propLabel);
-        hLayout->setContentsMargins(0, 0, 0, 0); // Убираем отступы у горизонтального компоновщика
-        hLayout->addStretch(); // Добавляем растяжение для создания отступов справа
-
-        textLayout->addLayout(hLayout);
+    for (int i = 0; i < props.size()-2; ++i) {
+        QLabel *propLabel = new QLabel(QString::fromStdString(props[i]));
+        propLabel->setStyleSheet("QLabel {max-height: 22px; margin: 0; padding: 0; font-size: 18px;}");
+        textLayout->addWidget(propLabel);
     }
 
-    // Добавляем вертикальный виджет с текстом под изображением
+    QLabel *massLabel = new QLabel(QString::fromStdString(props[props.size()-2]+"g"));
+    massLabel->setStyleSheet("QLabel {max-height: 22px; margin: 0; padding: 0; font-size: 18px;}");
+    textLayout->addWidget(massLabel);
+
+    // Создаем пустой виджет для ограничения места под описанием
+    QWidget *descriptionSpacer = new QWidget();
+    descriptionSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    descriptionSpacer->setMaximumHeight(1000); // Set a fixed height (adjust as needed)
+    textLayout->addWidget(descriptionSpacer);
+
+    // Добавляем вертикальный виджет с текстом в горизонтальный компоновщик
     QWidget *textWidget = new QWidget();
     textWidget->setLayout(textLayout);
-    productLayout->addWidget(textWidget); // Добавляем текстовый виджет под изображением
+    mainLayout->addWidget(textWidget); // Добавляем текстовый виджет
+
+    // Добавляем горизонтальный компоновщик в основной продуктовый компоновщик
+    productLayout->addLayout(mainLayout);
+
+    QLabel *priceLabel = new QLabel(QString::fromStdString(props[props.size()-1]+" BYN"));
+    priceLabel->setStyleSheet("QLabel {max-height: 64px; margin: 0; padding: 0; font-size: 48px; margin-right: 4px;}");
+    productLayout->addWidget(priceLabel);
+    QWidget *priceSpacer = new QWidget();
+    priceSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    priceSpacer->setMaximumHeight(1000); // Set a fixed height (adjust as needed)
+    productLayout->addWidget(priceSpacer);
 
     // Кнопка "Назад"
     QPushButton *backButton = new QPushButton("Назад", this);
@@ -576,8 +595,9 @@ void MainWindow::updateDelete(const std::string &name) {
 
         // Split the content by ';' and replace occurrences of name
         QStringList items = content.split(';');
-        for (int i = 0; i < items.size(); ++i) {
-            if (items[i].trimmed() == QString::fromStdString(name)) {
+        int j = 0;
+        for (; j < items.size(); ++j) {
+            if (items[j] == QString::fromStdString(name)) {
                 QFile fil("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i])+"/"+QString::fromStdString(imgPaths[i])+"Props.txt");
 
                 if (!fil.open(QIODevice::ReadWrite | QIODevice::Text)) {
@@ -590,19 +610,13 @@ void MainWindow::updateDelete(const std::string &name) {
                 fil.resize(0); // Clear the file for writing
                 QStringList is = content.split('\n');
 
-                for (int i = 0; i < is.size(); ++i) {
-                    std::string dataEl = is[i].toStdString();
+                items.erase(items.begin() + j);
+                is.erase(is.begin()+j);
 
-                    if (dataEl == name) {
-                        is.erase(is.begin()+i);
-                    }
-                }
-
-                QTextStream out(&fil);
-                out << is.join('\n'); // Join items with '\n' and add the delimiter at the end
+                QTextStream outs(&fil);
+                outs << is.join('\n'); // Join items with '\n' and add the delimiter at the end
                 fil.close();
 
-                items.erase(items.begin() + i); // Replace with editedName
                 break;
             }
 
@@ -611,7 +625,7 @@ void MainWindow::updateDelete(const std::string &name) {
         // Write the modified content back to the file
         QTextStream out(&file);
         out << items.join(';'); // Join items with ';' and add the delimiter at the end
-
+        out << '\n';
         file.close(); // Close the file
     }
 }
@@ -620,51 +634,53 @@ void MainWindow::updateAdd(const std::string &name, const std::string &desc) {
     std::vector<std::string> filePaths = {"Burger/BurgerTypes.txt", "Drink/DrinkTypes.txt", "FoodBox/FoodTypes.txt", "Salad/SaladTypes.txt", "Sauce/SauceTypes.txt", "Snack/SnackTypes.txt", "Soup/SoupTypes.txt"};
     std::vector<std::string> imgPaths = {"Burger", "Drink", "FoodBox", "Salad", "Sauce", "Snack", "Soup"};
     for (int i = 0; i < filePaths.size(); ++i) {
-        QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(filePaths[i]));
-        QFile fil("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i])+"/"+QString::fromStdString(imgPaths[i])+"Props.txt");
+        if (imgPaths[i] == types) {
+            QFile file("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(filePaths[i]));
+            QFile fil("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/FoodTypes/"+QString::fromStdString(imgPaths[i])+"/"+QString::fromStdString(imgPaths[i])+"Props.txt");
 
+            // Open the file for reading and writing
+            if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                std::cerr << "Could not open file" << std::endl;
+                continue; // Move to the next file
+            }
 
-        // Open the file for reading and writing
-        if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            std::cerr << "Could not open file" << std::endl;
-            continue; // Move to the next file
+            if (!fil.open(QIODevice::ReadWrite | QIODevice::Text)) {
+                std::cerr << "Could not open file" << std::endl;
+                continue; // Move to the next file
+            }
+
+            QTextStream in(&file);
+            QString content = in.readAll(); // Read the entire file content
+            file.resize(0); // Clear the file for writing
+
+            QTextStream ins(&fil);
+            QString cont = ins.readAll(); // Read the entire file content
+            fil.resize(0); // Clear the file for writing
+
+            // Split the content by ';' and replace occurrences of name
+            QStringList items = content.split(';');
+            if (items.back() == '\n') {
+                items.pop_back();
+            }
+            QStringList props = cont.split('\n');
+            if (props.back().isEmpty()) {
+                props.pop_back();
+            }
+
+            items << QString::fromStdString(name);
+            props << QString::fromStdString(desc);
+
+            // Write the modified content back to the file
+            QTextStream out(&file);
+            QTextStream outs(&fil);
+            out << items.join(';'); // Join items with ';' and add the delimiter at the end
+            out << ";";
+            outs << props.join('\n'); // Join items with '\n' and add the delimiter at the end
+            outs << '\n';
+
+            file.close(); // Close the file
+            fil.close();
         }
-
-        if (!fil.open(QIODevice::ReadWrite | QIODevice::Text)) {
-            std::cerr << "Could not open file" << std::endl;
-            continue; // Move to the next file
-        }
-
-        QTextStream in(&file);
-        QString content = in.readAll(); // Read the entire file content
-        file.resize(0); // Clear the file for writing
-
-        QTextStream ins(&fil);
-        QString cont = ins.readAll(); // Read the entire file content
-        fil.resize(0); // Clear the file for writing
-
-        // Split the content by ';' and replace occurrences of name
-        QStringList items = content.split(';');
-        if (items.back() == '\n') {
-            items.pop_back();
-        }
-        QStringList props = cont.split('\n');
-        if (props.back().isEmpty()) {
-            props.pop_back();
-        }
-        items << QString::fromStdString(name);
-        props << QString::fromStdString(desc);
-
-        // Write the modified content back to the file
-        QTextStream out(&file);
-        QTextStream outs(&fil);
-        out << items.join(';'); // Join items with ';' and add the delimiter at the end
-        out << ";";
-        outs << props.join('\n'); // Join items with '\n' and add the delimiter at the end
-        outs << '\n';
-
-        file.close(); // Close the file
-        fil.close();
     }
 }
 
