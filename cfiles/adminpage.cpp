@@ -108,7 +108,7 @@ void AdminPage::showUsernameInput(QVBoxLayout *layout, const std::string &action
                 std::cout << "ADD" << " ";
                 emit adminActionTriggeredAdd(username.toStdString());
             }
-            if (std::strcmp(action.c_str(), "Admin Delete")) {
+            if (action == "Admin Delete") {
                 std::cout << "DEL" << " ";
                 emit adminActionTriggeredDelete(username.toStdString());
             }
