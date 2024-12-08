@@ -6,6 +6,7 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     MainWindow window;
+    app.setWindowIcon(QIcon(":assets/icon.png"));
 
     // QString fontPath = ":/assets/Circular Std Book.ttf"; // Укажите путь к вашему шрифту
     // int fontId = QFontDatabase::addApplicationFont(fontPath);
