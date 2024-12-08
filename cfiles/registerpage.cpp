@@ -16,7 +16,7 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
 
     // Заголовок с кнопкой
     QHBoxLayout *headerLayout = new QHBoxLayout();
-    QLabel *titleLabel = new QLabel("Регистрация");
+    QLabel *titleLabel = new QLabel("Registration");
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(24); // Увеличиваем размер шрифта
     titleLabel->setFont(titleFont);
@@ -35,7 +35,7 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
     layout->addLayout(headerLayout); // Добавляем заголовок с кнопкой в основной макет
 
     // Логин
-    layout->addWidget(new QLabel("Логин:", this));
+    layout->addWidget(new QLabel("Login:", this));
     usernameEdit = new QLineEdit(this);
     usernameEdit->setFixedWidth(250);
     usernameEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;"); // Нейтральный цвет рамки
@@ -43,7 +43,7 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
     layout->addWidget(usernameEdit);
 
     // Пароль
-    layout->addWidget(new QLabel("Пароль:", this));
+    layout->addWidget(new QLabel("Password:", this));
     passwordEdit = new QLineEdit(this);
     passwordEdit->setEchoMode(QLineEdit::Password);
     passwordEdit->setFixedWidth(250);
@@ -53,7 +53,7 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
     layout->addSpacing(20);
 
     // Кнопка регистрации
-    registerButton = new QPushButton("Зарегистрироваться", this);
+    registerButton = new QPushButton("Register", this);
     registerButton->setFixedSize(200, 50);
     // registerButton->setStyleSheet("font-size: 16px; padding: 10px; background-color: #ccc; color: #333; border: none; border-radius: 5px;"); // Нейтральный цвет кнопки
     registerButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; } "
@@ -62,7 +62,7 @@ RegisterPage::RegisterPage(QWidget *parent) : QWidget(parent) {
     layout->addWidget(registerButton, 0, Qt::AlignCenter); // Центрируем кнопку
 
     // Кнопка назад
-    QPushButton* backButton = new QPushButton("Назад", this);
+    QPushButton* backButton = new QPushButton("Back", this);
     backButton->setFixedSize(200, 50);
     backButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
                               "QPushButton:hover { color: #bbb; }");

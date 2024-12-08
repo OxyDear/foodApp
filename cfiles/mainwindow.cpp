@@ -1,6 +1,7 @@
 #include "../hfiles/mainwindow.h"
 #include "../hfiles/adminpage.h"
 #include <QFile>
+#include <QFontDatabase>
 #include <QDir>
 #include <QTextStream>
 #include <QStringList>
@@ -34,6 +35,23 @@ MainWindow::~MainWindow() {
 void MainWindow::setupUI() {
     // Настройка общего стиля
     // setStyleSheet("QMainWindow { background-color: #f5f5f5; }");
+    setStyleSheet("QMainWindow { background-color: #333333;}");
+    // изменено
+
+    QString fontPath = ":/assets/Lulo Clean W01 One Bold.ttf"; // Укажите путь к вашему шрифту
+    int fontId = QFontDatabase::addApplicationFont(fontPath);
+    QFont customFont; // Используйте первый шрифт из списка
+
+    if (fontId != -1) {
+        QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+        if (!fontFamilies.isEmpty()) {
+            QFont customFont(fontFamilies.at(0)); // Используйте первый шрифт из списка
+        } else {
+            qDebug() << "Не удалось получить шрифты из файла.";
+        }
+    } else {
+        qDebug() << "Не удалось загрузить шрифт!";
+    }
 
     stackedWidget = new QStackedWidget(this);
     setCentralWidget(stackedWidget);
@@ -44,8 +62,15 @@ void MainWindow::setupUI() {
     mainLayout->setContentsMargins(20, 20, 20, 20); // Отступы
 
     QPushButton *addButton = new QPushButton("Add", this);
-    addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px; }"
-                             "QPushButton:hover { color: #bbb; }");
+
+    // addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px; }"
+    //                          "QPushButton:hover { color: #bbb; }");
+    addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px;}"
+                              "QPushButton:hover { color: #bbb; }");
+    // addButton->setFont(customFont);
+    // addButton->setStyleSheet("QPushButton { padding: 10px; font-size: 14px;}"
+    //                          "QPushButton:hover { background-color: darkorange; }");
+    // changed
     addButton->setVisible(false); // Initially hidden
 
     connect(addButton, &QPushButton::clicked, this, [this]() {
@@ -130,16 +155,16 @@ void MainWindow::setupUI() {
     mainLayout->addLayout(categoryLayout);
 
     // Отображение имени пользователя
-    userLabel = new QLabel("Пользователь: Не вошел", this);
+    userLabel = new QLabel("User: Did not enter", this);
     userLabel->setStyleSheet("font-size: 16px; font-weight: bold; padding: 10px;");
     categoryLayout->addWidget(userLabel);
     categoryLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     // Кнопка для перехода на страницу типов
-    addCategoryButton(categoryLayout, "Типы");
+    addCategoryButton(categoryLayout, "Types");
 
     // Кнопка авторизации
-    addAuthorizeButton(categoryLayout, "Вход", addButton);
+    addAuthorizeButton(categoryLayout, "Login", addButton);
 
     // Прокручиваемая область для продуктов
     scrollArea = new QScrollArea(this);
@@ -162,7 +187,7 @@ void MainWindow::setupUI() {
     mainImageLabel->setFixedSize(300, 300);
     productLayout->addWidget(mainImageLabel);
 
-    backButton = new QPushButton("Назад", this);
+    backButton = new QPushButton("Back", this);
     backButton->setStyleSheet("padding: 10px; font-size: 16px;");
     connect(backButton, &QPushButton::clicked, [this]() {
         stackedWidget->setCurrentWidget(mainPage);
@@ -249,6 +274,9 @@ void MainWindow::addAuthorizeButton(QHBoxLayout *categoryLayout, const QString &
 
 void MainWindow::addProduct(const std::string &imagePath, const std::string &name, const std::string &mass, const std::string &price) {
     ProductWidget *productWidget = new ProductWidget(imagePath, name);
+    // changed
+    // productWidget->setStyleSheet("background-color: white; border-radius: 10px; border: 1px solid transparent; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);");
+    // changed
     Food* reader = new Food(types);
     std::vector<std::vector<std::string>> props = reader->setPropsList();
     std::vector<std::string> prop;
@@ -258,9 +286,10 @@ void MainWindow::addProduct(const std::string &imagePath, const std::string &nam
             prop = props[i];
         }
     }
-    connect(productWidget, &ProductWidget::clicked, [this, imagePath, name, prop]() {
 
+    connect(productWidget, &ProductWidget::clicked, [this, imagePath, name, prop, productWidget]() {
         QFile adds("/Users/oxydear/Documents/Ivan's Mac/BSUIR/OOP/course/foodApp/assets/adds.txt");
+        // changed
 
         if (!adds.open(QIODevice::ReadWrite | QIODevice::Text)) {
             std::cerr << "Could not open file" << std::endl;
@@ -368,7 +397,7 @@ void MainWindow::showProductPage(const std::string &imagePath, const std::string
     productLayout->addWidget(priceSpacer);
 
     // Кнопка "Назад"
-    QPushButton *backButton = new QPushButton("Назад", this);
+    QPushButton *backButton = new QPushButton("Back", this);
     backButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
                               "QPushButton:hover { color: #bbb; }");
     connect(backButton, &QPushButton::clicked, [this]() {
@@ -689,6 +718,6 @@ void MainWindow::setCurrentUser(const std::string &username) {
         delete currentUser; // Удаляем предыдущего пользователя
     }
     currentUser = new User(username); // Создаем нового пользователя
-    userLabel->setText(QString("Пользователь: %1").arg(QString::fromStdString(currentUser->getUsername())));
-    qDebug() << "Пользователь вошел:" << currentUser->getUsername();
+    userLabel->setText(QString("User: %1").arg(QString::fromStdString(currentUser->getUsername())));
+    qDebug() << "User Enter:" << currentUser->getUsername();
 }

@@ -18,6 +18,8 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+    void enterEvent(QEnterEvent *event);
+    void leaveEvent(QEvent *event);
 
 private:
     QLabel *productImage;

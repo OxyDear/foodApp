@@ -12,7 +12,7 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
 
     // Заголовок с кнопкой
     QHBoxLayout *headerLayout = new QHBoxLayout();
-    QLabel *titleLabel = new QLabel("Вход");
+    QLabel *titleLabel = new QLabel("Login");
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(24); // Увеличиваем размер шрифта
     titleLabel->setFont(titleFont);
@@ -30,14 +30,14 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     layout->addLayout(headerLayout); // Добавляем заголовок с кнопкой в основной макет
 
     // Логин
-    layout->addWidget(new QLabel("Логин:"));
+    layout->addWidget(new QLabel("Login:"));
     usernameEdit = new QLineEdit(this);
     usernameEdit->setFixedWidth(250); // Увеличиваем ширину
     usernameEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
     layout->addWidget(usernameEdit);
 
     // Пароль
-    layout->addWidget(new QLabel("Пароль:"));
+    layout->addWidget(new QLabel("Password:"));
     passwordEdit = new QLineEdit(this);
     passwordEdit->setEchoMode(QLineEdit::Password);
     passwordEdit->setFixedWidth(250); // Увеличиваем ширину
@@ -47,7 +47,7 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     layout->addSpacing(20);
 
     // Кнопка регистрации
-    loginButton = new QPushButton("Войти", this);
+    loginButton = new QPushButton("Log In", this);
     loginButton->setFixedSize(200, 50); // Увеличиваем размер кнопки
     loginButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"
                                "QPushButton:hover { color: #bbb; }");
@@ -59,7 +59,7 @@ LoginPage::LoginPage(QWidget *parent) : QWidget(parent) {
     layout->addWidget(loginButton, 0, Qt::AlignCenter);
 
     // Кнопка назад
-    QPushButton* backButton = new QPushButton("Назад", this);
+    QPushButton* backButton = new QPushButton("Back", this);
     backButton->setFixedSize(200, 50); // Увеличиваем размер кнопки
     backButton->setFont(buttonFont); // Используем тот же шрифт
     backButton->setStyleSheet("QPushButton { padding: 10px; font-size: 16px; }"

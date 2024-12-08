@@ -1,1 +1,1 @@
-Chickeni Burger;Beef Burger;Chicken Cheeseburger;Beef Cheeseburger;
+Chicken Burger;Beef Burger;Chicken Cheeseburger;Beef Cheeseburger;

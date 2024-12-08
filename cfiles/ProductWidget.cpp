@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QDir>
 #include <iostream>
+#include <QPalette>
 
 ProductWidget::ProductWidget(const std::string &imagePath, const std::string name, QWidget *parent)
     : QWidget(parent), imagePath(imagePath) {
@@ -60,10 +61,10 @@ ProductWidget::ProductWidget(const std::string &imagePath, const std::string nam
     adds.close();
 
     productName = new QLabel(QString::fromStdString(name));
-    QFont font = productName->font();
-    font.setPointSize(18);
-    font.setBold(true);
-    productName->setFont(font);
+    // QFont font = productName->font();
+    // font.setPointSize(18);
+    // font.setBold(true);
+    // productName->setFont(font);
 
     layout->addWidget(productImage);
     layout->addWidget(productName);
@@ -71,7 +72,26 @@ ProductWidget::ProductWidget(const std::string &imagePath, const std::string nam
     setCursor(Qt::PointingHandCursor); // Изменяем курсор при наведении
 }
 
+void ProductWidget::enterEvent(QEnterEvent *event) {
+    // Код, который выполняется при наведении курсора
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Window, "#4A4947"); // Установите нужный цвет
+    this->setPalette(palette);
+    this->setAutoFillBackground(true); // Включаем заливку фона
+
+}
+
+void ProductWidget::leaveEvent(QEvent *event) {
+    // Сбрасываем цвет фона при уходе курсора
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Window, "#333333"); // Установите цвет по умолчанию
+    this->setPalette(palette);
+
+    QWidget::leaveEvent(event); // Вызываем базовую реализацию
+}
+
 void ProductWidget::mousePressEvent(QMouseEvent *event) {
     emit clicked(); // Генерируем сигнал при нажатии
     QWidget::mousePressEvent(event); // Вызываем базовый реализацию
 }
+

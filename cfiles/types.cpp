@@ -62,13 +62,13 @@ void TypesPage::setupUI() {
     // QLineEdit *fromPriceEdit = new QLineEdit(this);
     fromPriceEdit->setFixedWidth(250);
     fromPriceEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
-    fromPriceEdit->setPlaceholderText("Введите цену от"); // Подсказка для поля
+    fromPriceEdit->setPlaceholderText("Enter cost from"); // Подсказка для поля
 
     // QLabel *toLabel = new QLabel("Цена до:", this);
     // QLineEdit *toPriceEdit = new QLineEdit(this);
     toPriceEdit->setFixedWidth(250);
     toPriceEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
-    toPriceEdit->setPlaceholderText("Введите цену до"); // Подсказка для поля
+    toPriceEdit->setPlaceholderText("Enter cost up to"); // Подсказка для поля
 
     priceLayout->addWidget(fromPriceEdit);
     priceLayout->addWidget(toPriceEdit);

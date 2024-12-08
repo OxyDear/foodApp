@@ -64,5 +64,8 @@
         <file>assets/FoodTypes/Soup/images/Solyanka.png</file>
         <file>assets/FoodTypes/Burger/BurgerProps.txt</file>
         <file>assets/adds.txt</file>
+        <file>assets/Lulo Clean W01 One Bold.ttf</file>
+        <file>assets/Calibri.ttf</file>
+        <file>assets/Circular Std Book.ttf</file>
     </qresource>
 </RCC>

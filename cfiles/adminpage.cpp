@@ -17,14 +17,14 @@ void AdminPage::setupUI() {
 
     // Header with title and back button
     QHBoxLayout *headerLayout = new QHBoxLayout();
-    QLabel *titleLabel = new QLabel("Админ Панель");
+    QLabel *titleLabel = new QLabel("Admin Menu");
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(24); // Increase font size
     titleLabel->setFont(titleFont);
     headerLayout->addWidget(titleLabel);
 
     // Back button
-    QPushButton *backButton = new QPushButton("Назад", this);
+    QPushButton *backButton = new QPushButton("Back", this);
     backButton->setFixedSize(100, 40); // Size of the button
     headerLayout->addWidget(backButton, 0, Qt::AlignRight);
     connect(backButton, &QPushButton::clicked, this, [this]() {
@@ -36,7 +36,7 @@ void AdminPage::setupUI() {
     // Buttons for admin actions
     QVBoxLayout *buttonsLayout = new QVBoxLayout();
 
-    QStringList adminActions = {"Изменить", "Добавить", "Удалить", "Админ Добавить", "Aдмин Удалить"};
+    QStringList adminActions = {"Change", "Add", "Delete", "Admin Add", "Admin Delete"};
     for (const QString &action : adminActions) {
         QPushButton *actionButton = new QPushButton(action, this);
         actionButton->setFixedSize(250, 45); // Size of the buttons
@@ -61,24 +61,24 @@ void AdminPage::showUsernameInput(QVBoxLayout *layout, const std::string &action
     // Create a QLineEdit for username input
     // QLineEdit *usernameInput = new QLineEdit(this);
     // if (usernameInput == nullptr) {
-    if (action == "Изменить") {
+    if (action == "Change") {
         showNameInput(layout, action);
         return;
     }
 
-    if (action == "Добавить") {
+    if (action == "Add") {
         showAddInput(layout, action);
         return;
     }
 
-    if (action == "Удалить") {
+    if (action == "Delete") {
         showDeleteInput(layout, action);
         return;
     }
 
-    if (std::strcmp(action.c_str(), "Админ Добавить") or std::strcmp(action.c_str(), "Админ Удалить")) {
+    if (std::strcmp(action.c_str(), "Admin Add") or std::strcmp(action.c_str(), "Admin Delete")) {
         QLineEdit *usernameInput = new QLineEdit(this);
-        usernameInput->setPlaceholderText("Введите имя пользователя");
+        usernameInput->setPlaceholderText("Enter username");
         usernameInput->setFixedWidth(250); // Set width
         usernameInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
@@ -104,11 +104,11 @@ void AdminPage::showUsernameInput(QVBoxLayout *layout, const std::string &action
         connect(confirmButton, &QPushButton::clicked, this, [this, usernameInput, inputLayout, layout, confirmButton, action]() {
             QString username = usernameInput->text();
             // Process the username input here (e.g., emit a signal or handle it directly)
-            if (action == "Админ Добавить") {
+            if (action == "Admin Add") {
                 std::cout << "ADD" << " ";
                 emit adminActionTriggeredAdd(username.toStdString());
             }
-            if (std::strcmp(action.c_str(), "Админ Удалить")) {
+            if (std::strcmp(action.c_str(), "Admin Delete")) {
                 std::cout << "DEL" << " ";
                 emit adminActionTriggeredDelete(username.toStdString());
             }
@@ -134,12 +134,12 @@ void AdminPage::showNameInput(QVBoxLayout *layout, const std::string &action) {
     // QLineEdit *usernameInput = new QLineEdit(this);
     // if (usernameInput == nullptr) {
     QLineEdit *nameInput = new QLineEdit(this);
-    nameInput->setPlaceholderText("Введите название");
+    nameInput->setPlaceholderText("Enter product name");
     nameInput->setFixedWidth(250); // Set width
     nameInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
     QLineEdit *editedNameInput = new QLineEdit(this);
-    editedNameInput->setPlaceholderText("Введите измененное название");
+    editedNameInput->setPlaceholderText("Enter changed product name");
     editedNameInput->setFixedWidth(250); // Set width
     editedNameInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
@@ -167,7 +167,7 @@ void AdminPage::showNameInput(QVBoxLayout *layout, const std::string &action) {
         QString name = nameInput->text();
         QString editedName = editedNameInput->text();
         // Process the username input here (e.g., emit a signal or handle it directly)
-        if (action == "Изменить") {
+        if (action == "Change") {
             std::cout << "CHANGE_GOODS" << " ";
             emit adminActionTriggeredChange(name.toStdString(), editedName.toStdString());
         }
@@ -193,7 +193,7 @@ void AdminPage::showDeleteInput(QVBoxLayout *layout, const std::string &action) 
     // QLineEdit *usernameInput = new QLineEdit(this);
     // if (usernameInput == nullptr) {
     QLineEdit *nameInput = new QLineEdit(this);
-    nameInput->setPlaceholderText("Введите название");
+    nameInput->setPlaceholderText("Enter product name");
     nameInput->setFixedWidth(250); // Set width
     nameInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
@@ -219,7 +219,7 @@ void AdminPage::showDeleteInput(QVBoxLayout *layout, const std::string &action) 
     connect(confirmButton, &QPushButton::clicked, this, [this, nameInput, inputLayout, layout, confirmButton, action]() {
         QString name = nameInput->text();
         // Process the username input here (e.g., emit a signal or handle it directly)
-        if (action == "Удалить") {
+        if (action == "Delete") {
             std::cout << "DELETE_GOODS" << " ";
             emit adminActionTriggeredDeleteOne(name.toStdString());
         }
@@ -238,18 +238,17 @@ void AdminPage::showDeleteInput(QVBoxLayout *layout, const std::string &action) 
 
 }
 
-
 void AdminPage::showAddInput(QVBoxLayout *layout, const std::string &action) {
     // Create a QLineEdit for username input
     // QLineEdit *usernameInput = new QLineEdit(this);
     // if (usernameInput == nullptr) {
     QLineEdit *nameInput = new QLineEdit(this);
-    nameInput->setPlaceholderText("Введите название");
+    nameInput->setPlaceholderText("Enter product name");
     nameInput->setFixedWidth(250); // Set width
     nameInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
     QLineEdit *descInput = new QLineEdit(this);
-    descInput->setPlaceholderText("Введите описание");
+    descInput->setPlaceholderText("Enter product description");
     descInput->setFixedWidth(250); // Set width
     descInput->setStyleSheet("padding: 5px; border: 1px solid #aaa; border-radius: 5px;");
 
@@ -277,7 +276,7 @@ void AdminPage::showAddInput(QVBoxLayout *layout, const std::string &action) {
         QString name = nameInput->text();
         QString desc = descInput->text();
         // Process the username input here (e.g., emit a signal or handle it directly)
-        if (action == "Добавить") {
+        if (action == "Add") {
             std::cout << "ADD_GOODS" << " ";
             emit adminActionTriggeredAddOne(name.toStdString(), desc.toStdString());
         }
