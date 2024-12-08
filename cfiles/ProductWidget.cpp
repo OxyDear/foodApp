@@ -75,7 +75,7 @@ ProductWidget::ProductWidget(const std::string &imagePath, const std::string nam
 void ProductWidget::enterEvent(QEnterEvent *event) {
     // Код, который выполняется при наведении курсора
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, "#4A4947"); // Установите нужный цвет
+    palette.setColor(QPalette::Window, "#3F3E3D"); // Установите нужный цвет
     this->setPalette(palette);
     this->setAutoFillBackground(true); // Включаем заливку фона
 
